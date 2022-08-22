@@ -86,7 +86,7 @@
         select count(1)
         from t_record
         where user_id = #{userId}
-    </select>
+    </select>   
     <select id="pageRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
         select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, create_time, update_time
         from t_record
