@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.RecordDao">
+
+    <insert id="addRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into t_record(user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity) 
+        values (#{userId}, #{surveyTime}, #{lat}, #{lng}, #{cropType}, #{cropVariety},#{diseaseType}, #{diseaseSeverity}, #{pestType}, #{pestSeverity}, #{droughtSeverity})
+    </insert>
+    <insert id="addDiseaseImg" useGeneratedKeys="true" keyProperty="id">
+        insert into t_disease_img(record_id, url) VALUES (#{recordId}, #{imgUrl}) 
+    </insert>
+    <insert id="addPestImg" useGeneratedKeys="true" keyProperty="id">
+        insert into t_pest_img(record_id, url) values (#{recordId}, #{imgUrl})
+    </insert>
+    <insert id="addDroughtImg" useGeneratedKeys="true" keyProperty="id">
+        insert into t_drought_img(record_id, url) values (#{recordId}, #{imgUrl})
+    </insert>
+    <update id="updateRecord">
+        update t_record
+        <set>
+            <if test="surveyTime != null">
+                survey_time = #{surveyTime},
+            </if>
+            <if test="lat != null">
+                lat = #{lat},
+            </if>
+            <if test="lng != null">
+                lng = #{lng},
+            </if>
+            <if test="cropType != null and cropType != ''">
+                crop_type = #{cropType},
+            </if>
+            <if test="cropVariety != null and cropVariety != ''">
+                crop_variety = #{cropVariety},
+            </if>
+            <if test="diseaseType != null and diseaseType != ''">
+                disease_type = #{diseaseType},
+            </if>
+            <if test="diseaseSeverity != null and diseaseSeverity != ''">
+                disease_severity = #{diseaseSeverity},
+            </if>
+            <if test="pestType != null and pestType != ''">
+                pest_type = #{pestType},
+            </if>
+            <if test="pestSeverity != null and pestSeverity != ''">
+                pest_severity = #{pestSeverity},
+            </if>
+            <if test="droughtSeverity != null and droughtSeverity != ''">
+                drought_severity = #{droughtSeverity}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <delete id="deleteRecordById">
+        delete from t_record where id = #{id}
+    </delete>
+    <delete id="deleteDiseaseImg">
+        delete from t_disease_img where id = #{id}
+    </delete>
+    <delete id="deletePestImg">
+        delete from t_pest_img where id = #{id}
+    </delete>
+    <delete id="deleteDroughtImg">
+        delete from t_drought_img where id = #{id}
+    </delete>
+    <delete id="deleteDiseaseImgByRecordId">
+        delete from t_disease_img where record_id = #{recordId}
+    </delete>
+    <delete id="deletePestImgByRecordId">
+        delete from t_pest_img where record_id = #{recordId}
+    </delete>
+    <delete id="deleteDroughtImgByRecordImg">
+        delete
+        from t_drought_img
+        where record_id = #{recordId};
+    </delete>
+    <select id="getRecordById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, create_time, update_time
+        from t_record
+        where id = #{id}
+    </select>
+    <select id="getRecordCountByUserId" resultType="java.lang.Integer">
+        select count(1)
+        from t_record
+        where user_id = #{userId}
+    </select>
+    <select id="pageRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, create_time, update_time
+        from t_record
+        where user_id = #{userId}
+        order by create_time desc
+        limit #{start}, #{pageSize}
+    </select>
+    <select id="getDiseaseImgById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_disease_img
+        where id = #{id}
+    </select>
+    <select id="getPestImgById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_pest_img
+        where id = #{id}
+    </select>
+    <select id="getDroughtImgById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_drought_img
+        where id = #{id}
+    </select>
+    <select id="getDiseaseImgRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_disease_img
+        where record_id = #{recordId}
+    </select>
+    <select id="getPestImgRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_pest_img
+        where record_id = #{recordId}
+    </select>
+    <select id="getDroughtImgRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DroughtImgRecord">
+        select id, record_id, url imgUrl, create_time, update_time
+        from t_drought_img
+        where record_id = #{recordId}
+    </select>
+</mapper>
