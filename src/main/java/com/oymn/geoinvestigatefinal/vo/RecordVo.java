@@ -1,10 +1,16 @@
 package com.oymn.geoinvestigatefinal.vo;
 
+import com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord;
+import com.oymn.geoinvestigatefinal.dao.pojo.DroughtImgRecord;
+import com.oymn.geoinvestigatefinal.dao.pojo.PestImgRecord;
+import com.oymn.geoinvestigatefinal.dao.pojo.Record;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel("记录实体类，和Record区别是它含有图片链表")
 @Data
@@ -45,6 +51,30 @@ public class RecordVo {
 
     @ApiModelProperty("干旱的严重程度")
     private String droughtSeverity;
+    
+    @ApiModelProperty("病害图片链表")
+    private List<DiseaseImgRecord> diseaseImgRecordList;
+    
+    @ApiModelProperty("虫害图片链表")
+    private List<PestImgRecord> pestImgRecordList;
+    
+    @ApiModelProperty("干旱图片链表")
+    private List<DroughtImgRecord> droughtImgRecordList;
+    
+    public void copyFromRecord(Record record){
+        this.id = record.getId();
+        this.userId = record.getUserId();
+        this.surveyTime = record.getSurveyTime();
+        this.lat = record.getLat();
+        this.lng = record.getLng();
+        this.cropType = record.getCropType();
+        this.cropVariety = record.getCropVariety();
+        this.diseaseType = record.getDiseaseType();
+        this.diseaseSeverity = record.getDiseaseSeverity();
+        this.pestType = record.getPestType();
+        this.pestSeverity = record.getPestSeverity();
+        this.droughtSeverity = record.getDroughtSeverity();
+    }
 
     
 }

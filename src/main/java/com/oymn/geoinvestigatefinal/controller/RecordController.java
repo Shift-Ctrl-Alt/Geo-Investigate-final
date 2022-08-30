@@ -6,12 +6,12 @@ import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.FileService;
 import com.oymn.geoinvestigatefinal.service.RecordService;
 import com.oymn.geoinvestigatefinal.service.UserService;
+import com.oymn.geoinvestigatefinal.vo.RecordVo;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -214,5 +214,31 @@ public class RecordController {
         List<DroughtImgRecord> droughtImgRecordList = recordService.getDroughtImgRecord(recordId);
         return Result.success(droughtImgRecordList);
     }
+    
+    @ApiOperation("用户：查询单条记录")
+    @GetMapping("get")
+    public Result<RecordVo> getRecordById(@ApiParam("主记录的id") @RequestParam Long id){
+        Record dbRecord = recordService.getRecordById(id);
+        Long userId = userSupport.getCurrentUserId();
+        if(userId != dbRecord.getUserId()){
+            throw new ConditionException("该记录不属于该用户");
+        }
+
+        RecordVo recordVo = new RecordVo();
+        recordVo.copyFromRecord(dbRecord);
+
+        List<DiseaseImgRecord> diseaseImgRecordList = recordService.getDiseaseImgRecord(id);
+        recordVo.setDiseaseImgRecordList(diseaseImgRecordList);
+
+        List<PestImgRecord> pestImgRecordList = recordService.getPestImgRecord(id);
+        recordVo.setPestImgRecordList(pestImgRecordList);
+
+        List<DroughtImgRecord> droughtImgRecordList = recordService.getDroughtImgRecord(id);
+        recordVo.setDroughtImgRecordList(droughtImgRecordList);
+
+        return Result.success(recordVo);
+    }
+    
+
 
 }
