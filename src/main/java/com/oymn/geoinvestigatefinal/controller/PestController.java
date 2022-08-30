@@ -1,6 +1,8 @@
 package com.oymn.geoinvestigatefinal.controller;
 
 import com.oymn.geoinvestigatefinal.dao.pojo.PestType;
+import com.oymn.geoinvestigatefinal.dao.pojo.User;
+import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.PestService;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.Api;
@@ -21,11 +23,14 @@ public class PestController {
     @Autowired
     private PestService pestService;
     
+    @Autowired
+    private UserSupport userSupport;
+    
     @ApiOperation("添加虫害类型")
     @PostMapping("/add")
     @PreAuthorize("@ex.hasAuthority('system:pest:add')")
     public Result<Long> addPestType(@ApiParam("虫害类型的名称") @RequestParam String pestTypeName){
-        Long id = pestService.addPestType(new PestType(pestTypeName));
+        Long id = pestService.addPestType(new PestType(pestTypeName, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     

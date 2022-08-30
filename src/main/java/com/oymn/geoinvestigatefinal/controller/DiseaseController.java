@@ -1,6 +1,7 @@
 package com.oymn.geoinvestigatefinal.controller;
 
 import com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType;
+import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.DiseaseService;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.Api;
@@ -21,11 +22,14 @@ public class DiseaseController {
     @Autowired
     private DiseaseService diseaseService;
     
+    @Autowired
+    private UserSupport userSupport;
+    
     @ApiOperation("添加病害类型")
     @PostMapping("/add")
     @PreAuthorize("@ex.hasAuthority('system:disease:add')")
     public Result<Long> addDiseaseType(@ApiParam("病害类型名称") @RequestParam String diseaseTypeName){
-        Long id = diseaseService.addDiseaseType(new DiseaseType(diseaseTypeName));
+        Long id = diseaseService.addDiseaseType(new DiseaseType(diseaseTypeName, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     

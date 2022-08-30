@@ -1,9 +1,6 @@
 package com.oymn.geoinvestigatefinal.dao.mapper;
 
-import com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord;
-import com.oymn.geoinvestigatefinal.dao.pojo.DroughtImgRecord;
-import com.oymn.geoinvestigatefinal.dao.pojo.PestImgRecord;
-import com.oymn.geoinvestigatefinal.dao.pojo.Record;
+import com.oymn.geoinvestigatefinal.dao.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -55,5 +52,18 @@ public interface RecordDao {
     List<PestImgRecord> getPestImgRecord(Long recordId);
 
     List<DroughtImgRecord> getDroughtImgRecord(Long recordId);
-    
+
+    void addDiseaseType(DiseaseType diseaseType);
+
+    void addPestType(PestType pestType);
+
+    void addCropType(CropType cropType);
+
+    void addCropVariety(CropVariety cropVariety);
+
+    List<DiseaseType> getAllDiseaseType(Long userId);
+
+    List<PestType> getAllPestType(Long userId);
+
+    List<CropType> getAllCropType(Long userId);
 }

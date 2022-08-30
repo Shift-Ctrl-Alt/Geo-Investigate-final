@@ -18,6 +18,12 @@ public class CropVariety {
     @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("创建用户")
+    private Long createUser;
+
+    @ApiModelProperty("是否是管理员")
+    private Integer isManager;
+
     @ApiModelProperty("创建时间")
     private Date createTime;
 
@@ -27,8 +33,10 @@ public class CropVariety {
     public CropVariety() {
     }
 
-    public CropVariety(Long typeId, String name) {
+    public CropVariety(Long typeId, String name, Long createUser, Integer isManager) {
         this.typeId = typeId;
         this.name = name;
+        this.createUser = createUser;
+        this.isManager = isManager;
     }
 }

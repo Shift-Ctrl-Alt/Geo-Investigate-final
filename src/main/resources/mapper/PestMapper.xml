@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.PestDao">
     <insert id="addPestType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_pest_type(name) values(#{name})
+        insert into t_pest_type(name, create_user, is_manager) values(#{name}, #{createUser}, #{isManager})
     </insert>
     <update id="updatePestType">
         update t_pest_type set name = #{name} where id = #{id}

@@ -15,6 +15,12 @@ public class DiseaseType {
     
     @ApiModelProperty("病害类型名")
     private String name;
+
+    @ApiModelProperty("创建用户")
+    private Long createUser;
+
+    @ApiModelProperty("是否是管理员")
+    private Integer isManager;
     
     @ApiModelProperty("创建时间")
     private Date createTime;
@@ -30,7 +36,9 @@ public class DiseaseType {
         this.name = name;
     }
 
-    public DiseaseType(String name) {
+    public DiseaseType(String name, Long createUser, Integer isManager) {
         this.name = name;
+        this.createUser = createUser;
+        this.isManager = isManager;
     }
 }

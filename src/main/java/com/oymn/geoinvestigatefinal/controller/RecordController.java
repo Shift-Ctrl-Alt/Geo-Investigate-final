@@ -10,6 +10,7 @@ import com.oymn.geoinvestigatefinal.vo.RecordVo;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
@@ -239,6 +240,53 @@ public class RecordController {
         return Result.success(recordVo);
     }
     
+    @ApiOperation("用户：添加病害类型")
+    @PostMapping("add/disease/type")
+    public Result<Long> addDiseaseType(@ApiParam("病害类型的名称") @RequestParam String diseaseName){
+        Long id = recordService.addDiseaseType(new DiseaseType(diseaseName, userSupport.getCurrentUserId(), 0));
+        return Result.success(id);
+    }
 
+    @ApiOperation("用户：添加虫害类型")
+    @PostMapping("add/pest/type")
+    public Result<Long> addPestType(@ApiParam("虫害类型的名称") @RequestParam String pestName){
+        Long id = recordService.addPestType(new PestType(pestName, userSupport.getCurrentUserId(), 0));
+        return Result.success(id);
+    } 
+    
+    @ApiOperation("用户：添加作物类型")
+    @PostMapping("add/crop/type")
+    public Result<Long> addCropType(@ApiParam("作物类型的名称") @RequestParam String cropTypeName){
+        Long id = recordService.addCropType(new CropType(cropTypeName, userSupport.getCurrentUserId(), 0));
+        return Result.success(id);
+    }
+    
+    @ApiOperation("用户：添加作物品种")
+    @PostMapping("add/crop/variety")
+    public Result<Long> addCropVariety(@ApiParam("作物类型的id") @RequestParam Long cropTypeId,
+                                       @ApiParam("作物品种的名称") @RequestParam String name){
+        Long id = recordService.addCropVariety(new CropVariety(cropTypeId, name, userSupport.getCurrentUserId(), 0));
+        return Result.success(id);
+    }
 
+    @ApiOperation("用户：查询所有的病害类型")
+    @GetMapping("/get/disease/type")
+    public Result<List<DiseaseType>> getAllDiseaseType(){
+        List<DiseaseType> diseaseTypeList = recordService.getAllDiseaseType(userSupport.getCurrentUserId());
+        return Result.success(diseaseTypeList);
+    }
+
+    @ApiOperation("用户：查询所有的虫害类型")
+    @GetMapping("/get/pest/type")
+    public Result<List<PestType>> getAllPestType(){
+        List<PestType> pestTypeList = recordService.getAllPestType(userSupport.getCurrentUserId());
+        return Result.success(pestTypeList);
+    }
+
+    @ApiOperation("用户：查询所有的作物类型")
+    @GetMapping("/get/crop/type")
+    public Result<List<CropType>> getAllCropType(){
+        List<CropType> cropTypeList = recordService.getAllCropType(userSupport.getCurrentUserId());
+        return Result.success(cropTypeList);
+    }
 }

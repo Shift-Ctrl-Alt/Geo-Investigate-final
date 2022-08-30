@@ -16,6 +16,18 @@
     <insert id="addDroughtImg" useGeneratedKeys="true" keyProperty="id">
         insert into t_drought_img(record_id, url) values (#{recordId}, #{imgUrl})
     </insert>
+    <insert id="addDiseaseType" useGeneratedKeys="true" keyProperty="id">
+        insert into t_disease_type(name, create_user, is_manager) values (#{name}, #{createUser}, #{isManager})
+    </insert>
+    <insert id="addPestType" useGeneratedKeys="true" keyProperty="id">
+        insert into t_pest_type(name, create_user, is_manager) values (#{name}, #{createUser}, #{isManager})
+    </insert>
+    <insert id="addCropType" useGeneratedKeys="true" keyProperty="id">
+        insert into t_crop_type(name, create_user, is_manager) values (#{name}, #{createUser}, #{isManager})
+    </insert>
+    <insert id="addCropVariety" useGeneratedKeys="true" keyProperty="id">
+        insert into t_crop_variety(type_id, name, create_user, is_manager) VALUES (#{typeId}, #{name}, #{createUser}, #{isManager})
+    </insert>
     <update id="updateRecord">
         update t_record
         <set>
@@ -123,5 +135,20 @@
         select id, record_id, url imgUrl, create_time, update_time
         from t_drought_img
         where record_id = #{recordId}
+    </select>
+    <select id="getAllDiseaseType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_disease_type
+        where is_manager = 1 or create_user = #{userId}
+    </select>
+    <select id="getAllPestType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_pest_type
+        where is_manager = 1 or create_user = #{userId}
+    </select>
+    <select id="getAllCropType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_crop_type
+        where is_manager = 1 or create_user = #{userId}
     </select>
 </mapper>

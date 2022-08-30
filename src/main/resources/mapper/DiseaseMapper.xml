@@ -4,7 +4,7 @@
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.DiseaseDao">
 
     <insert id="addDiseaseType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_disease_type(name) values (#{name})
+        insert into t_disease_type(name, create_user, is_manager) values (#{name}, #{createUser}, #{isManager})
     </insert>
     <update id="updateDiseaseType">
         update t_disease_type set name = #{name} where id = #{id}

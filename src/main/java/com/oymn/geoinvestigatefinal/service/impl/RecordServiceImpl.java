@@ -2,6 +2,7 @@ package com.oymn.geoinvestigatefinal.service.impl;
 
 import com.oymn.geoinvestigatefinal.common.StatusCode;
 import com.oymn.geoinvestigatefinal.dao.exception.ConditionException;
+import com.oymn.geoinvestigatefinal.dao.mapper.CropDao;
 import com.oymn.geoinvestigatefinal.dao.mapper.RecordDao;
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
 import com.oymn.geoinvestigatefinal.service.RecordService;
@@ -18,6 +19,9 @@ public class RecordServiceImpl implements RecordService {
     
     @Autowired
     private RecordDao recordDao;
+    
+    @Autowired
+    private CropDao cropDao;
 
     @Override
     public Long addRecord(Record record) {
@@ -122,5 +126,54 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<DroughtImgRecord> getDroughtImgRecord(Long recordId) {
         return recordDao.getDroughtImgRecord(recordId);
+    }
+
+    @Override
+    public Long addDiseaseType(DiseaseType diseaseType) {
+        recordDao.addDiseaseType(diseaseType);
+        return diseaseType.getId();
+    }
+
+    @Override
+    public Long addPestType(PestType pestType) {
+        recordDao.addPestType(pestType);
+        return pestType.getId();
+    }
+
+    @Override
+    public Long addCropType(CropType cropType) {
+        recordDao.addCropType(cropType);
+        return cropType.getId();
+    }
+
+    @Override
+    public Long addCropVariety(CropVariety cropVariety) {
+        CropType dbCropType = cropDao.getCropTypeById(cropVariety.getTypeId());
+        if(dbCropType == null){
+            throw new ConditionException("作物类型不存在");
+        }
+
+        CropVariety dbCropVariety = cropDao.getCropVariety(cropVariety.getTypeId(), cropVariety.getName());
+        if(dbCropVariety != null){
+            throw new ConditionException("作物品种名称已存在");
+        }
+
+        cropDao.addCropVariety(cropVariety);
+        return cropVariety.getId();
+    }
+
+    @Override
+    public List<DiseaseType> getAllDiseaseType(Long userId) {
+        return recordDao.getAllDiseaseType(userId);
+    }
+
+    @Override
+    public List<PestType> getAllPestType(Long userId) {
+        return recordDao.getAllPestType(userId);
+    }
+
+    @Override
+    public List<CropType> getAllCropType(Long userId) {
+        return recordDao.getAllCropType(userId);
     }
 }

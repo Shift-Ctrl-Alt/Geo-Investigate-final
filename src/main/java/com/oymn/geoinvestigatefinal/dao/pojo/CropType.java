@@ -16,6 +16,12 @@ public class CropType {
     @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("创建用户")
+    private Long createUser;
+
+    @ApiModelProperty("是否是管理员")
+    private Integer isManager;
+
     @ApiModelProperty("创建时间")
     private Date createTime;
 
@@ -30,7 +36,9 @@ public class CropType {
         this.name = name;
     }
 
-    public CropType(String name) {
+    public CropType(String name, Long createUser, Integer isManager) {
         this.name = name;
+        this.createUser = createUser;
+        this.isManager = isManager;
     }
 }

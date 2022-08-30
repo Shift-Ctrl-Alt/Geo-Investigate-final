@@ -2,6 +2,7 @@ package com.oymn.geoinvestigatefinal.controller;
 
 import com.oymn.geoinvestigatefinal.dao.pojo.CropType;
 import com.oymn.geoinvestigatefinal.dao.pojo.CropVariety;
+import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.CropService;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.Api;
@@ -21,11 +22,14 @@ public class CropController {
     @Autowired
     private CropService cropService;
     
+    @Autowired
+    private UserSupport userSupport;
+    
     @ApiOperation("添加作物类型")
     @PostMapping("add-type")
     @PreAuthorize("@ex.hasAuthority('system:crop:addtype')")
     public Result<Long> addCropType(@ApiParam("作物类型名称") @RequestParam String name){
-        Long id = cropService.addCropType(new CropType(name));
+        Long id = cropService.addCropType(new CropType(name, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     
@@ -58,7 +62,7 @@ public class CropController {
     @PreAuthorize("@ex.hasAuthority('system:crop:addvariety')")
     public Result<Long> addCropVariety(@ApiParam("作物类型的id") @RequestParam Long cropTypeId,
                                        @ApiParam("作物品种的名称") @RequestParam String name){
-        Long id = cropService.addCropVariety(new CropVariety(cropTypeId, name));
+        Long id = cropService.addCropVariety(new CropVariety(cropTypeId, name, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     

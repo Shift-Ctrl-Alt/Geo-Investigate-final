@@ -122,4 +122,54 @@ public interface RecordService {
      * @return
      */
     List<DroughtImgRecord> getDroughtImgRecord(Long recordId);
+
+    /**
+     * 添加病害类型
+     * @param diseaseName
+     * @param currentUserId
+     */
+    Long addDiseaseType(DiseaseType diseaseType);
+
+    /**
+     * 添加虫害类型
+     * @param pestType
+     * @return
+     */
+    Long addPestType(PestType pestType);
+
+    /**
+     * 添加作物类型
+     * @param cropType
+     * @return
+     */
+    Long addCropType(CropType cropType);
+
+    /**
+     * 添加作物品种
+     * @param cropVariety
+     * @return
+     */
+    Long addCropVariety(CropVariety cropVariety);
+
+    /**
+     * 获取病害类型（包括下拉菜单和用户自定义）
+     * @param userId
+     * @return
+     */
+    List<DiseaseType> getAllDiseaseType(Long userId);
+
+    /**
+     * 获取虫害类型（包括下拉菜单和用户自定义）
+     * @param currentUserId
+     * @return
+     */
+    List<PestType> getAllPestType(Long currentUserId);
+
+    /**
+     * 获取作物类型（包括下拉菜单和用户自定义）
+     * @param currentUserId
+     * @return
+     */
+    List<CropType> getAllCropType(Long currentUserId);
+    
 }

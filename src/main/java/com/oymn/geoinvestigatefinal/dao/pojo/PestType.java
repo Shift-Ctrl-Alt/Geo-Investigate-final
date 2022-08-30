@@ -15,6 +15,12 @@ public class PestType {
 
     @ApiModelProperty("虫害类型名")
     private String name;
+    
+    @ApiModelProperty("创建用户")
+    private Long createUser;
+    
+    @ApiModelProperty("是否是管理员")
+    private Integer isManager;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
@@ -30,7 +36,9 @@ public class PestType {
         this.name = name;
     }
 
-    public PestType(String name) {
+    public PestType(String name, Long createUser, Integer isManager) {
         this.name = name;
+        this.createUser = createUser;
+        this.isManager = isManager;
     }
 }
