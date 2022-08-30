@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 22/08/2022 11:56:52
+ Date: 30/08/2022 17:28:27
 */
 
 SET NAMES utf8mb4;
@@ -24,16 +24,21 @@ DROP TABLE IF EXISTS `t_crop_type`;
 CREATE TABLE `t_crop_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_user` bigint(20) NULL DEFAULT NULL,
+  `is_manager` int(255) NULL DEFAULT NULL,
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_crop_type
 -- ----------------------------
-INSERT INTO `t_crop_type` VALUES (2, '小麦', '2022-08-18 11:11:28', '2022-08-18 11:11:28');
-INSERT INTO `t_crop_type` VALUES (4, '水稻', '2022-08-22 10:53:01', '2022-08-22 10:53:01');
+INSERT INTO `t_crop_type` VALUES (2, '小麦', NULL, NULL, '2022-08-18 11:11:28', '2022-08-18 11:11:28');
+INSERT INTO `t_crop_type` VALUES (4, '水稻', NULL, NULL, '2022-08-22 10:53:01', '2022-08-22 10:53:01');
+INSERT INTO `t_crop_type` VALUES (6, 'qq', 6, 0, '2022-08-30 16:48:34', '2022-08-30 16:48:34');
+INSERT INTO `t_crop_type` VALUES (7, 'rryu', 6, 0, '2022-08-30 16:55:08', '2022-08-30 16:55:08');
+INSERT INTO `t_crop_type` VALUES (8, '33', 6, NULL, '2022-08-30 17:11:48', '2022-08-30 17:11:48');
 
 -- ----------------------------
 -- Table structure for t_crop_variety
@@ -43,14 +48,17 @@ CREATE TABLE `t_crop_variety`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type_id` bigint(20) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `create_time` datetime NULL DEFAULT NULL,
-  `update_time` datetime NULL DEFAULT NULL,
+  `create_user` bigint(255) NULL DEFAULT NULL,
+  `is_manager` int(255) NULL DEFAULT NULL,
+  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_crop_variety
 -- ----------------------------
+INSERT INTO `t_crop_variety` VALUES (5, 6, 'rr', 4, 1, '2022-08-30 16:51:46', '2022-08-30 16:51:46');
 
 -- ----------------------------
 -- Table structure for t_disease_img
@@ -63,7 +71,7 @@ CREATE TABLE `t_disease_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_disease_img
@@ -77,6 +85,8 @@ DROP TABLE IF EXISTS `t_disease_type`;
 CREATE TABLE `t_disease_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_user` bigint(20) NULL DEFAULT NULL,
+  `is_manager` int(255) NULL DEFAULT NULL,
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
@@ -85,7 +95,10 @@ CREATE TABLE `t_disease_type`  (
 -- ----------------------------
 -- Records of t_disease_type
 -- ----------------------------
-INSERT INTO `t_disease_type` VALUES (2, '花粉病', '2022-08-17 16:10:17', '2022-08-17 16:10:17');
+INSERT INTO `t_disease_type` VALUES (2, '花粉病', NULL, NULL, '2022-08-17 16:10:17', '2022-08-17 16:10:17');
+INSERT INTO `t_disease_type` VALUES (4, 'gg', 6, 0, '2022-08-30 16:47:54', '2022-08-30 16:47:54');
+INSERT INTO `t_disease_type` VALUES (5, 'qq', 6, 1, '2022-08-30 16:59:28', '2022-08-30 16:59:28');
+INSERT INTO `t_disease_type` VALUES (6, '33', 6, NULL, '2022-08-30 17:12:37', '2022-08-30 17:12:37');
 
 -- ----------------------------
 -- Table structure for t_drought_img
@@ -98,7 +111,7 @@ CREATE TABLE `t_drought_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_drought_img
@@ -117,7 +130,7 @@ CREATE TABLE `t_permission`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 50 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_permission
@@ -172,7 +185,7 @@ CREATE TABLE `t_pest_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_pest_img
@@ -186,6 +199,8 @@ DROP TABLE IF EXISTS `t_pest_type`;
 CREATE TABLE `t_pest_type`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_user` bigint(20) NULL DEFAULT NULL,
+  `is_manager` int(255) NULL DEFAULT NULL,
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
@@ -194,6 +209,10 @@ CREATE TABLE `t_pest_type`  (
 -- ----------------------------
 -- Records of t_pest_type
 -- ----------------------------
+INSERT INTO `t_pest_type` VALUES (3, 'rr', 6, 0, '2022-08-30 16:48:09', '2022-08-30 16:48:09');
+INSERT INTO `t_pest_type` VALUES (4, 'rrr', NULL, NULL, '2022-08-30 16:57:08', '2022-08-30 16:57:08');
+INSERT INTO `t_pest_type` VALUES (5, 'ff', 6, 1, '2022-08-30 16:59:14', '2022-08-30 16:59:14');
+INSERT INTO `t_pest_type` VALUES (6, '33', 4, 0, '2022-08-30 17:11:13', '2022-08-30 17:11:13');
 
 -- ----------------------------
 -- Table structure for t_record
@@ -215,7 +234,7 @@ CREATE TABLE `t_record`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_record
@@ -254,7 +273,7 @@ CREATE TABLE `t_role_permission`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 72 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_permission
@@ -307,7 +326,7 @@ CREATE TABLE `t_severity`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_severity
@@ -327,7 +346,7 @@ CREATE TABLE `t_user`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
@@ -346,7 +365,7 @@ CREATE TABLE `t_user_role`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role
