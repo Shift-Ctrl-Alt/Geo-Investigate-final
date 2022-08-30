@@ -3,6 +3,7 @@ package com.oymn.geoinvestigatefinal.dao.mapper;
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 import java.util.Map;
@@ -66,4 +67,7 @@ public interface RecordDao {
     List<PestType> getAllPestType(Long userId);
 
     List<CropType> getAllCropType(Long userId);
+
+    List<CropVariety> getCropVariety(@Param("cropTypeId") Long cropTypeId, @Param("userId") Long userId);
+    
 }

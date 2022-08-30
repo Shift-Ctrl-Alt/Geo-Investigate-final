@@ -151,4 +151,9 @@
         from t_crop_type
         where is_manager = 1 or create_user = #{userId}
     </select>
+    <select id="getCropVariety" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
+        select id, type_id, name, create_user, is_manager, create_time, update_time
+        from t_crop_variety
+        where type_id = #{cropTypeId} and (create_user = #{userId} or is_manager = 1)
+    </select>
 </mapper>

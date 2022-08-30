@@ -176,4 +176,9 @@ public class RecordServiceImpl implements RecordService {
     public List<CropType> getAllCropType(Long userId) {
         return recordDao.getAllCropType(userId);
     }
+
+    @Override
+    public List<CropVariety> getCropVariety(Long cropTypeId, Long userId) {
+        return recordDao.getCropVariety(cropTypeId, userId);
+    }
 }

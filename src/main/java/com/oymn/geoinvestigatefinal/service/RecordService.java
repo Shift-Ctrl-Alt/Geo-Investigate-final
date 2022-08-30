@@ -171,5 +171,6 @@ public interface RecordService {
      * @return
      */
     List<CropType> getAllCropType(Long currentUserId);
-    
+
+    List<CropVariety> getCropVariety(Long cropTypeId, Long currentUserId);
 }

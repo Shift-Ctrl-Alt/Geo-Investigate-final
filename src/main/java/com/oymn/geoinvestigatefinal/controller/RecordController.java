@@ -289,4 +289,11 @@ public class RecordController {
         List<CropType> cropTypeList = recordService.getAllCropType(userSupport.getCurrentUserId());
         return Result.success(cropTypeList);
     }
+    
+    @ApiOperation("用户：通过作物类型查询作物品种")
+    @GetMapping("/get/crop/variety")
+    public Result<List<CropVariety>> getCropVariety(@ApiParam("作物类型id") @RequestParam Long cropTypeId){
+        List<CropVariety> cropVarietyList = recordService.getCropVariety(cropTypeId, userSupport.getCurrentUserId());
+        return Result.success(cropVarietyList);
+    }
 }
