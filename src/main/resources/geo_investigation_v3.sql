@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 30/08/2022 17:28:27
+ Date: 31/08/2022 16:25:00
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `t_crop_type`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_crop_type
@@ -53,7 +53,7 @@ CREATE TABLE `t_crop_variety`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_crop_variety
@@ -71,7 +71,7 @@ CREATE TABLE `t_disease_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_disease_img
@@ -90,7 +90,7 @@ CREATE TABLE `t_disease_type`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_disease_type
@@ -111,12 +111,79 @@ CREATE TABLE `t_drought_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_drought_img
 -- ----------------------------
 INSERT INTO `t_drought_img` VALUES (3, 2, 'ee', '2022-08-22 11:40:16', '2022-08-22 11:40:16');
+
+-- ----------------------------
+-- Table structure for t_land_attribute
+-- ----------------------------
+DROP TABLE IF EXISTS `t_land_attribute`;
+CREATE TABLE `t_land_attribute`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `land_type_id` bigint(20) NOT NULL,
+  `name_chs` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name_en` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `unit` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `required` int(11) NULL DEFAULT NULL,
+  `create_time` datetime NULL DEFAULT NULL,
+  `update_time` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_land_attribute
+-- ----------------------------
+INSERT INTO `t_land_attribute` VALUES (1, 2, '森林起源类型', 'origin of forest', '无', 0, NULL, NULL);
+INSERT INTO `t_land_attribute` VALUES (2, 2, '森林用途', 'Forest use', '无', 1, NULL, NULL);
+INSERT INTO `t_land_attribute` VALUES (4, 2, '植被高度', 'vegetation height', '无', 1, '2022-06-13 22:12:48', '2022-06-13 22:12:49');
+INSERT INTO `t_land_attribute` VALUES (5, 2, '覆盖度', 'degree of coverage', '无', 1, '2022-06-13 22:22:05', '2022-06-13 22:22:05');
+INSERT INTO `t_land_attribute` VALUES (8, 4, '333', '33', NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for t_land_attribute_value
+-- ----------------------------
+DROP TABLE IF EXISTS `t_land_attribute_value`;
+CREATE TABLE `t_land_attribute_value`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `land_attr_id` bigint(20) NOT NULL,
+  `value_chs` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `value_en` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `create_time` datetime NULL DEFAULT NULL,
+  `update_time` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_land_attribute_value
+-- ----------------------------
+INSERT INTO `t_land_attribute_value` VALUES (10, 8, '22', '22', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for t_land_type
+-- ----------------------------
+DROP TABLE IF EXISTS `t_land_type`;
+CREATE TABLE `t_land_type`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `name_chs` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '简体中文名称',
+  `name_en` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '英文名称',
+  `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父类型id',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_land_type
+-- ----------------------------
+INSERT INTO `t_land_type` VALUES (1, '林地', 'woodlands', NULL, NULL, NULL);
+INSERT INTO `t_land_type` VALUES (2, '常绿阔叶林', 'Evergreen Broadleaved Forests', 1, NULL, NULL);
+INSERT INTO `t_land_type` VALUES (3, '落叶阔叶林', 'Deciduous Broadleaved Forests', 1, NULL, NULL);
+INSERT INTO `t_land_type` VALUES (4, '草地', 'grassland', NULL, NULL, NULL);
+INSERT INTO `t_land_type` VALUES (5, '温性草甸草原', 'Warm meadow', 4, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -130,7 +197,7 @@ CREATE TABLE `t_permission`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_permission
@@ -172,7 +239,17 @@ INSERT INTO `t_permission` VALUES (34, 'system:severity:add', '添加严重程�
 INSERT INTO `t_permission` VALUES (35, 'system:severity:update', '修改严重程度', NULL, '2022-08-22 10:45:53', '2022-08-22 10:45:53');
 INSERT INTO `t_permission` VALUES (36, 'system:severity:delete', '删除严重程度', NULL, '2022-08-22 10:46:13', '2022-08-22 10:46:13');
 INSERT INTO `t_permission` VALUES (37, 'system:severity:get', '查询所有的严重程度', NULL, '2022-08-22 10:46:46', '2022-08-22 10:46:46');
-INSERT INTO `t_permission` VALUES (38, '测试2', 'string', 'string', '2022-08-22 11:19:48', '2022-08-22 11:19:48');
+INSERT INTO `t_permission` VALUES (38, 'system:landtype:get', '获取土地类型', '', '2022-08-22 11:19:48', '2022-08-22 11:19:48');
+INSERT INTO `t_permission` VALUES (39, 'system:landattribute:get', '获取土地属性及属性值', NULL, '2022-08-31 11:28:56', '2022-08-31 11:28:56');
+INSERT INTO `t_permission` VALUES (40, 'system:landtype:add', '添加土地类型', NULL, '2022-08-31 11:29:22', '2022-08-31 11:29:22');
+INSERT INTO `t_permission` VALUES (41, 'system:landattribute:add', '添加土地属性', NULL, '2022-08-31 11:29:52', '2022-08-31 11:29:52');
+INSERT INTO `t_permission` VALUES (42, 'system:landattributevalue:add', '添加土地属性值', NULL, '2022-08-31 11:30:25', '2022-08-31 11:30:25');
+INSERT INTO `t_permission` VALUES (43, 'system:landtype:update', '修改土地类型', NULL, '2022-08-31 11:30:45', '2022-08-31 11:30:45');
+INSERT INTO `t_permission` VALUES (44, 'system:landtype:delete', '删除土地类型', NULL, '2022-08-31 11:31:09', '2022-08-31 11:31:09');
+INSERT INTO `t_permission` VALUES (45, 'system:landattribute:update', '修改土地属性', NULL, '2022-08-31 11:31:46', '2022-08-31 11:31:46');
+INSERT INTO `t_permission` VALUES (46, 'system:landattributevalue:update', '修改土地属性值', NULL, '2022-08-31 11:32:05', '2022-08-31 11:32:05');
+INSERT INTO `t_permission` VALUES (47, 'system:landattribute:delete', '删除土地属性', NULL, '2022-08-31 11:32:22', '2022-08-31 11:32:22');
+INSERT INTO `t_permission` VALUES (48, 'system:landattributevalue:delete', '删除土地属性值', NULL, '2022-08-31 11:32:39', '2022-08-31 11:32:39');
 
 -- ----------------------------
 -- Table structure for t_pest_img
@@ -185,7 +262,7 @@ CREATE TABLE `t_pest_img`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_pest_img
@@ -204,7 +281,7 @@ CREATE TABLE `t_pest_type`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_pest_type
@@ -234,7 +311,7 @@ CREATE TABLE `t_record`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_record
@@ -252,7 +329,7 @@ CREATE TABLE `t_role`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role
@@ -273,7 +350,7 @@ CREATE TABLE `t_role_permission`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_role_permission
@@ -315,6 +392,17 @@ INSERT INTO `t_role_permission` VALUES (34, 1, 34, '2022-08-22 10:59:55', '2022-
 INSERT INTO `t_role_permission` VALUES (35, 1, 35, '2022-08-22 10:59:59', '2022-08-22 10:59:59');
 INSERT INTO `t_role_permission` VALUES (36, 1, 36, '2022-08-22 11:00:03', '2022-08-22 11:00:03');
 INSERT INTO `t_role_permission` VALUES (37, 1, 37, '2022-08-22 11:00:06', '2022-08-22 11:00:06');
+INSERT INTO `t_role_permission` VALUES (40, 1, 38, '2022-08-31 11:33:17', '2022-08-31 11:33:17');
+INSERT INTO `t_role_permission` VALUES (41, 1, 39, '2022-08-31 11:33:21', '2022-08-31 11:33:21');
+INSERT INTO `t_role_permission` VALUES (42, 1, 40, '2022-08-31 11:33:27', '2022-08-31 11:33:27');
+INSERT INTO `t_role_permission` VALUES (43, 1, 41, '2022-08-31 11:33:32', '2022-08-31 11:33:32');
+INSERT INTO `t_role_permission` VALUES (44, 1, 42, '2022-08-31 11:33:39', '2022-08-31 11:33:39');
+INSERT INTO `t_role_permission` VALUES (45, 1, 43, '2022-08-31 11:33:43', '2022-08-31 11:33:43');
+INSERT INTO `t_role_permission` VALUES (46, 1, 44, '2022-08-31 11:33:48', '2022-08-31 11:33:48');
+INSERT INTO `t_role_permission` VALUES (47, 1, 45, '2022-08-31 11:33:51', '2022-08-31 11:33:51');
+INSERT INTO `t_role_permission` VALUES (48, 1, 46, '2022-08-31 11:33:55', '2022-08-31 11:33:55');
+INSERT INTO `t_role_permission` VALUES (49, 1, 47, '2022-08-31 11:33:58', '2022-08-31 11:33:58');
+INSERT INTO `t_role_permission` VALUES (50, 1, 48, '2022-08-31 11:34:02', '2022-08-31 11:34:02');
 
 -- ----------------------------
 -- Table structure for t_severity
@@ -326,7 +414,7 @@ CREATE TABLE `t_severity`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_severity
@@ -346,7 +434,7 @@ CREATE TABLE `t_user`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user
@@ -365,7 +453,7 @@ CREATE TABLE `t_user_role`  (
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_user_role
