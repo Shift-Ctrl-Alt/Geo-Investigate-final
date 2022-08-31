@@ -296,4 +296,6 @@ public class RecordController {
         List<CropVariety> cropVarietyList = recordService.getCropVariety(cropTypeId, userSupport.getCurrentUserId());
         return Result.success(cropVarietyList);
     }
+    
+    ////fjkgg
 }
