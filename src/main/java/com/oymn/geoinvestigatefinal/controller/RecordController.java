@@ -297,5 +297,4 @@ public class RecordController {
         return Result.success(cropVarietyList);
     }
     
-    ////fjkgg
 }
