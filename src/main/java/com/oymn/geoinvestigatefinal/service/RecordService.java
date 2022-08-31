@@ -1,6 +1,8 @@
 package com.oymn.geoinvestigatefinal.service;
 
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
+import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
+import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -173,4 +175,8 @@ public interface RecordService {
     List<CropType> getAllCropType(Long currentUserId);
 
     List<CropVariety> getCropVariety(Long cropTypeId, Long currentUserId);
+
+    List<LandTypeVo> getLandType();
+
+    List<LandAttributeValueVo> getLandAttribute(Long landTypeId);
 }

@@ -6,6 +6,8 @@ import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.FileService;
 import com.oymn.geoinvestigatefinal.service.RecordService;
 import com.oymn.geoinvestigatefinal.service.UserService;
+import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
+import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
 import com.oymn.geoinvestigatefinal.vo.RecordVo;
 import com.oymn.geoinvestigatefinal.vo.Result;
 import io.swagger.annotations.*;
@@ -295,6 +297,29 @@ public class RecordController {
     public Result<List<CropVariety>> getCropVariety(@ApiParam("作物类型id") @RequestParam Long cropTypeId){
         List<CropVariety> cropVarietyList = recordService.getCropVariety(cropTypeId, userSupport.getCurrentUserId());
         return Result.success(cropVarietyList);
+    }
+
+    @ApiOperation("用户：获取土地类型")
+    @GetMapping("/get/land/type")
+    public Result<List<LandTypeVo>> getLandType(){
+        List<LandTypeVo> landTypeList = recordService.getLandType();
+        return Result.success(landTypeList);
+    }
+
+    /**
+     * 获取土地属性及属性值
+     * @param landTypeId
+     * @return
+     */
+    @ApiOperation("用户：获取土地属性及属性值")
+    @GetMapping("/get/land/attribute")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name = "landTypeId", value = "二级土地类型id",dataType = "Long", required = true)
+    )
+    @PreAuthorize("@ex.hasAuthority('system:landattribute:get')")
+    public Result<List<LandAttributeValueVo>> getLandAttribute(Long landTypeId){
+        List<LandAttributeValueVo> landAttributeList = recordService.getLandAttribute(landTypeId);
+        return Result.success(landAttributeList);
     }
     
 }

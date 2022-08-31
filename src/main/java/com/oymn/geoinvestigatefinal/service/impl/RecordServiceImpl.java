@@ -5,7 +5,10 @@ import com.oymn.geoinvestigatefinal.dao.exception.ConditionException;
 import com.oymn.geoinvestigatefinal.dao.mapper.CropDao;
 import com.oymn.geoinvestigatefinal.dao.mapper.RecordDao;
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
+import com.oymn.geoinvestigatefinal.service.LandService;
 import com.oymn.geoinvestigatefinal.service.RecordService;
+import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
+import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,9 @@ public class RecordServiceImpl implements RecordService {
     
     @Autowired
     private CropDao cropDao;
+    
+    @Autowired
+    private LandService landService;
 
     @Override
     public Long addRecord(Record record) {
@@ -180,5 +186,15 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<CropVariety> getCropVariety(Long cropTypeId, Long userId) {
         return recordDao.getCropVariety(cropTypeId, userId);
+    }
+
+    @Override
+    public List<LandTypeVo> getLandType() {
+        return landService.getLandType();
+    }
+
+    @Override
+    public List<LandAttributeValueVo> getLandAttribute(Long landTypeId) {
+        return landService.getLandAttribute(landTypeId);
     }
 }
