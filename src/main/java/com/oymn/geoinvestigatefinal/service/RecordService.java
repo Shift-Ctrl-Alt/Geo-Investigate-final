@@ -179,4 +179,8 @@ public interface RecordService {
     List<LandTypeVo> getLandType();
 
     List<LandAttributeValueVo> getLandAttribute(Long landTypeId);
+
+    List<Severity> getAllSeverity();
+    
+    
 }

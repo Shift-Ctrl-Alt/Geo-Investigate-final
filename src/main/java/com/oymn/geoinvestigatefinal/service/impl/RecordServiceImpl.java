@@ -7,6 +7,7 @@ import com.oymn.geoinvestigatefinal.dao.mapper.RecordDao;
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
 import com.oymn.geoinvestigatefinal.service.LandService;
 import com.oymn.geoinvestigatefinal.service.RecordService;
+import com.oymn.geoinvestigatefinal.service.SeverityService;
 import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
 import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,54 @@ public class RecordServiceImpl implements RecordService {
     
     @Autowired
     private LandService landService;
+    
+    @Autowired
+    private SeverityService severityService;
 
     @Override
     public Long addRecord(Record record) {
+        Long diseaseTypeId = record.getDiseaseType();
+        DiseaseType diseaseType = recordDao.getDiseaseTypeById(diseaseTypeId);
+        if(diseaseType == null){
+            throw new ConditionException("病害类型不存在");
+        }
+        
+        Long diseaseSeverityId = record.getDiseaseSeverity();
+        Severity diseaseSeverity = recordDao.getSeverityById(diseaseSeverityId);
+        if(diseaseSeverity == null){
+            throw new ConditionException("请输入正确的病害严重程度");
+        }
+
+        Long pestTypeId = record.getPestType();
+        PestType pestType = recordDao.getPestTypeById(pestTypeId);
+        if(pestType == null){
+            throw new ConditionException("虫害类型不存在");
+        }
+
+        Long pestSeverityId = record.getPestSeverity();
+        Severity pestSeverity = recordDao.getSeverityById(pestSeverityId);
+        if(pestSeverity == null){
+            throw new ConditionException("请输入正确的虫害严重程度");
+        }
+
+        Long cropTypeId = record.getCropType();
+        CropType cropType = recordDao.getCropTypeById(cropTypeId);
+        if(cropType == null){
+            throw new ConditionException("作物类型不存在");
+        }
+
+        Long CropVarietyId = record.getCropVariety();
+        CropVariety cropVariety = recordDao.getCropVarietyById(CropVarietyId);
+        if(cropVariety == null){
+            throw new ConditionException("作物品种不存在");
+        }
+
+        Long droughtSeverityId = record.getDroughtSeverity();
+        Severity droughtSeverity = recordDao.getSeverityById(droughtSeverityId);
+        if(droughtSeverity == null){
+            throw new ConditionException("请输入正确的干旱严重程度");
+        }
+
         recordDao.addRecord(record);
         return record.getId();
     }
@@ -196,5 +242,10 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public List<LandAttributeValueVo> getLandAttribute(Long landTypeId) {
         return landService.getLandAttribute(landTypeId);
+    }
+
+    @Override
+    public List<Severity> getAllSeverity() {
+        return severityService.getAllSeverity();
     }
 }

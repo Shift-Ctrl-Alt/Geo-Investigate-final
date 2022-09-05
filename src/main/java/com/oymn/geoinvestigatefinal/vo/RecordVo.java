@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
@@ -32,25 +33,28 @@ public class RecordVo {
     private Double lng;
 
     @ApiModelProperty("作物类型")
-    private String cropType;
+    private Long cropType;
 
     @ApiModelProperty("作物品种")
-    private String cropVariety;
+    private Long cropVariety;
 
     @ApiModelProperty("病害类型")
-    private String diseaseType;
+    private Long diseaseType;
 
     @ApiModelProperty("病害的严重程度")
-    private String diseaseSeverity;
+    private Long diseaseSeverity;
 
     @ApiModelProperty("虫害类型")
-    private String pestType;
+    private Long pestType;
 
     @ApiModelProperty("虫害的严重程度")
-    private String pestSeverity;
+    private Long pestSeverity;
 
     @ApiModelProperty("干旱的严重程度")
-    private String droughtSeverity;
+    private Long droughtSeverity;
+    
+    @ApiModelProperty("土地信息")
+    private String landMsg;
     
     @ApiModelProperty("病害图片链表")
     private List<DiseaseImgRecord> diseaseImgRecordList;
@@ -74,6 +78,7 @@ public class RecordVo {
         this.pestType = record.getPestType();
         this.pestSeverity = record.getPestSeverity();
         this.droughtSeverity = record.getDroughtSeverity();
+        this.landMsg = record.getLandMsg();
     }
 
     

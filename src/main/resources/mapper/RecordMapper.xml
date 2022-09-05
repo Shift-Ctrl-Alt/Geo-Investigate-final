@@ -4,8 +4,8 @@
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.RecordDao">
 
     <insert id="addRecord" useGeneratedKeys="true" keyProperty="id">
-        insert into t_record(user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity) 
-        values (#{userId}, #{surveyTime}, #{lat}, #{lng}, #{cropType}, #{cropVariety},#{diseaseType}, #{diseaseSeverity}, #{pestType}, #{pestSeverity}, #{droughtSeverity})
+        insert into t_record(user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg) 
+        values (#{userId}, #{surveyTime}, #{lat}, #{lng}, #{cropType}, #{cropVariety},#{diseaseType}, #{diseaseSeverity}, #{pestType}, #{pestSeverity}, #{droughtSeverity}, #{landMsg})
     </insert>
     <insert id="addDiseaseImg" useGeneratedKeys="true" keyProperty="id">
         insert into t_disease_img(record_id, url) VALUES (#{recordId}, #{imgUrl}) 
@@ -40,26 +40,29 @@
             <if test="lng != null">
                 lng = #{lng},
             </if>
-            <if test="cropType != null and cropType != ''">
+            <if test="cropType != null">
                 crop_type = #{cropType},
             </if>
-            <if test="cropVariety != null and cropVariety != ''">
+            <if test="cropVariety != null">
                 crop_variety = #{cropVariety},
             </if>
-            <if test="diseaseType != null and diseaseType != ''">
+            <if test="diseaseType != null">
                 disease_type = #{diseaseType},
             </if>
-            <if test="diseaseSeverity != null and diseaseSeverity != ''">
+            <if test="diseaseSeverity != null">
                 disease_severity = #{diseaseSeverity},
             </if>
-            <if test="pestType != null and pestType != ''">
+            <if test="pestType != null">
                 pest_type = #{pestType},
             </if>
-            <if test="pestSeverity != null and pestSeverity != ''">
+            <if test="pestSeverity != null">
                 pest_severity = #{pestSeverity},
             </if>
-            <if test="droughtSeverity != null and droughtSeverity != ''">
-                drought_severity = #{droughtSeverity}
+            <if test="droughtSeverity != null">
+                drought_severity = #{droughtSeverity},
+            </if>
+            <if test="landMsg != null and landMsg != ''">
+                land_msg = #{landMsg}
             </if>
         </set>
         <where>
@@ -90,7 +93,7 @@
         where record_id = #{recordId};
     </delete>
     <select id="getRecordById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
-        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, create_time, update_time
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time
         from t_record
         where id = #{id}
     </select>
@@ -100,7 +103,7 @@
         where user_id = #{userId}
     </select>   
     <select id="pageRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
-        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, create_time, update_time
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time
         from t_record
         where user_id = #{userId}
         order by create_time desc
@@ -155,5 +158,30 @@
         select id, type_id, name, create_user, is_manager, create_time, update_time
         from t_crop_variety
         where type_id = #{cropTypeId} and (create_user = #{userId} or is_manager = 1)
+    </select>
+    <select id="getDiseaseTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_disease_type
+        where id = #{diseaseTypeId}
+    </select>
+    <select id="getSeverityById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
+        select id, name, create_time, update_time
+        from t_severity
+        where id = #{severityId}
+    </select>
+    <select id="getPestTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_pest_type
+        where id = #{pestTypeId}
+    </select>
+    <select id="getCropTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
+        select id, name, create_user, is_manager, create_time, update_time
+        from t_crop_type
+        where id = #{cropTypeId}
+    </select>
+    <select id="getCropVarietyById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
+        select id, type_id, name, create_user, is_manager, create_time, update_time
+        from t_crop_variety
+        where id = #{cropVarietyId}
     </select>
 </mapper>

@@ -69,5 +69,15 @@ public interface RecordDao {
     List<CropType> getAllCropType(Long userId);
 
     List<CropVariety> getCropVariety(@Param("cropTypeId") Long cropTypeId, @Param("userId") Long userId);
+
+    DiseaseType getDiseaseTypeById(Long diseaseTypeId);
+
+    Severity getSeverityById(Long severityId);
+
+    PestType getPestTypeById(Long pestTypeId);
+
+    CropType getCropTypeById(Long cropTypeId);
+
+    CropVariety getCropVarietyById(Long cropVarietyId);
     
 }

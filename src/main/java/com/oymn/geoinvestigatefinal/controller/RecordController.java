@@ -78,6 +78,9 @@ public class RecordController {
     public Result deleteRecord(@ApiParam("记录的id") @RequestParam Long id){
         Long userId = userSupport.getCurrentUserId();
         Record dbRecord = recordService.getRecordById(id);
+        if(dbRecord == null){
+            throw new ConditionException("该记录不存在");
+        }
         if(dbRecord.getUserId() != userId){
             throw new ConditionException("该记录不属于该用户");
         }
@@ -108,7 +111,7 @@ public class RecordController {
         return Result.success(id);
     }
     
-    @ApiOperation("用户：删除灾害图片")
+    @ApiOperation("用户：删除病害图片")
     @DeleteMapping("delete/disease/img")
     public Result deleteDiseaseImg(@ApiParam("灾害图片的id") @RequestParam Long id){
         DiseaseImgRecord diseaseImgRecord = recordService.getDiseaseImgById(id);
@@ -320,6 +323,13 @@ public class RecordController {
     public Result<List<LandAttributeValueVo>> getLandAttribute(Long landTypeId){
         List<LandAttributeValueVo> landAttributeList = recordService.getLandAttribute(landTypeId);
         return Result.success(landAttributeList);
+    }
+
+    @ApiOperation("用户：查询所有的严重程度")
+    @GetMapping("/get/severity")
+    public Result<List<Severity>> getAllSeverity(){
+        List<Severity> severityList = recordService.getAllSeverity();
+        return Result.success(severityList);
     }
     
 }
