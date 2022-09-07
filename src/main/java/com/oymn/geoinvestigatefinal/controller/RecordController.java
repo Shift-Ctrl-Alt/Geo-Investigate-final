@@ -319,7 +319,6 @@ public class RecordController {
     @ApiImplicitParams(
             @ApiImplicitParam(name = "landTypeId", value = "二级土地类型id",dataType = "Long", required = true)
     )
-    @PreAuthorize("@ex.hasAuthority('system:landattribute:get')")
     public Result<List<LandAttributeValueVo>> getLandAttribute(Long landTypeId){
         List<LandAttributeValueVo> landAttributeList = recordService.getLandAttribute(landTypeId);
         return Result.success(landAttributeList);
