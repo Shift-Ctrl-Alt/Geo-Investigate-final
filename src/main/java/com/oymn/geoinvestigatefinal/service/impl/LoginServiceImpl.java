@@ -47,8 +47,15 @@ public class LoginServiceImpl implements LoginService {
     @Transactional(rollbackFor = Exception.class)
     public String login(User user) throws Exception {
         //使用 authenticationManager 来对用户进行认证
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-        Authentication authenticate = authenticationManager.authenticate(authenticationToken);
+
+        Authentication authenticate = null;
+        UsernamePasswordAuthenticationToken authenticationToken = null;
+        try {
+            authenticationToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+            authenticate = authenticationManager.authenticate(authenticationToken);
+        } catch (Exception e){
+            throw new ConditionException("用户名或密码错误");
+        }
         
         //如果认证没通过
         if(authenticate == null){
