@@ -16,6 +16,9 @@ public class Severity {
     @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("英文名称")
+    private String nameEn;
+
     @ApiModelProperty("创建时间")
     private Date createTime;
 
@@ -30,7 +33,8 @@ public class Severity {
         this.name = name;
     }
 
-    public Severity(String name) {
+    public Severity(String name, String nameEn) {
         this.name = name;
+        this.nameEn = nameEn;
     }
 }

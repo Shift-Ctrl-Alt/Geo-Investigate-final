@@ -1,5 +1,6 @@
 package com.oymn.geoinvestigatefinal.dao.pojo;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,6 +16,9 @@ public class DiseaseType {
     
     @ApiModelProperty("病害类型名")
     private String name;
+    
+    @ApiModelProperty("英文名称")
+    private String nameEn;
 
     @ApiModelProperty("创建用户")
     private Long createUser;
@@ -36,8 +40,9 @@ public class DiseaseType {
         this.name = name;
     }
 
-    public DiseaseType(String name, Long createUser, Integer isManager) {
+    public DiseaseType(String name, String nameEn, Long createUser, Integer isManager) {
         this.name = name;
+        this.nameEn = nameEn;
         this.createUser = createUser;
         this.isManager = isManager;
     }

@@ -3,18 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.CropDao">
     <insert id="addCropType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_crop_type(name, create_user, is_manager) values (#{name}, #{createUser}, #{isManager})
+        insert into t_crop_type(name, name_en, create_user, is_manager) values (#{name}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <insert id="addCropVariety">
-        insert into t_crop_variety(type_id, name, create_user, is_manager) values (#{typeId}, #{name}, #{createUser}, #{isManager})
+        insert into t_crop_variety(type_id, name, name_en, create_user, is_manager) values (#{typeId}, #{name}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <update id="updateCropType">
         update t_crop_type
-        set name = #{name}
+        set name = #{name}, name_en = #{nameEn}
         where id = #{id};
     </update>
     <update id="updateCropVariety">
-        update t_crop_variety set name = #{name} where id = #{id}
+        update t_crop_variety 
+        set name = #{name}, name_en = #{nameEn}
+        where id = #{id}
     </update>
     <delete id="deleteCropType">
         delete from t_crop_type where id = #{id}
@@ -27,26 +29,26 @@
     </delete>
 
     <select id="getCropTypeByName" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
-        select id, name, create_time createTime, update_time updateTime
+        select id, name, name_en, create_user, is_manager, create_time, update_time
         from t_crop_type
         where name = #{name}
     </select>
     <select id="getAllCropType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
-        select id, name, create_time createTime, update_time updateTime
+        select id, name, name_en, create_user, is_manager, create_time, update_time
         from t_crop_type
     </select>
     <select id="getCropTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
-        select id, name, create_time createTime, update_time updateTime
+        select id, name, name_en, create_user, is_manager, create_time, update_time
         from t_crop_type
         where id = #{typeId}
     </select>
     <select id="getCropVariety" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
-        select id, type_id typeId, name, create_time createTime, update_time updateTime
+        select id, type_id, name, name_en, create_user, is_manager, create_time, update_time
         from t_crop_variety
         where type_id = #{typeId} and name = #{cropVarietyName}
     </select>
     <select id="getAllCropVariety" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
-        select id, type_id typeId, name, create_time createTime, update_time updateTime
+        select id, type_id, name, name_en, create_user, is_manager, create_time, update_time
         from t_crop_variety
     </select>
 </mapper>

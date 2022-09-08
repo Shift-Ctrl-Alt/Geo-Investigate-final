@@ -3,22 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.SeverityDao">
     <insert id="addSeverity" useGeneratedKeys="true" keyProperty="id">
-        insert into t_severity(name) values (#{name})
+        insert into t_severity(name, name_en) values (#{name}, #{nameEn})
     </insert>
     <update id="updateSeverity">
-        update t_severity set name = #{name} where id = #{id}
+        update t_severity 
+        set name = #{name}, name_en = #{nameEn}
+        where id = #{id}
     </update>
     <delete id="deleteSeverity">
         delete from t_severity where id = #{id}
     </delete>
 
     <select id="getSeverityByName" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
-        select id, name, create_time, update_time
+        select id, name, name_en, create_time, update_time
         from t_severity
         where name = #{name}
     </select>
     <select id="getAllSeverity" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
-        select id, name, create_time, update_time
+        select id, name, name_en, create_time, update_time
         from t_severity
     </select>
 </mapper>

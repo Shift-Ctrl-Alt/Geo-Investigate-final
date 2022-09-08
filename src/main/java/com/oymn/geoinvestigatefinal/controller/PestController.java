@@ -29,8 +29,9 @@ public class PestController {
     @ApiOperation("添加虫害类型")
     @PostMapping("/add")
     @PreAuthorize("@ex.hasAuthority('system:pest:add')")
-    public Result<Long> addPestType(@ApiParam("虫害类型的名称") @RequestParam String pestTypeName){
-        Long id = pestService.addPestType(new PestType(pestTypeName, userSupport.getCurrentUserId(), 1));
+    public Result<Long> addPestType(@ApiParam("虫害类型的名称") @RequestParam String name,
+                                    @ApiParam("英文名称") @RequestParam String nameEn){
+        Long id = pestService.addPestType(new PestType(name,nameEn, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     

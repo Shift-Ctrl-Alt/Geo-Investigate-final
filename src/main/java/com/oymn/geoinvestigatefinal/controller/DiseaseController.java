@@ -28,8 +28,9 @@ public class DiseaseController {
     @ApiOperation("添加病害类型")
     @PostMapping("/add")
     @PreAuthorize("@ex.hasAuthority('system:disease:add')")
-    public Result<Long> addDiseaseType(@ApiParam("病害类型名称") @RequestParam String diseaseTypeName){
-        Long id = diseaseService.addDiseaseType(new DiseaseType(diseaseTypeName, userSupport.getCurrentUserId(), 1));
+    public Result<Long> addDiseaseType(@ApiParam("病害类型名称") @RequestParam String name,
+                                       @ApiParam("英文名称") @RequestParam String nameEn){
+        Long id = diseaseService.addDiseaseType(new DiseaseType(name, nameEn, userSupport.getCurrentUserId(), 1));
         return Result.success(id);
     }
     

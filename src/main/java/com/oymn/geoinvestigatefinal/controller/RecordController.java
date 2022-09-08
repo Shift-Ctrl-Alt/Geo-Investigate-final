@@ -248,21 +248,21 @@ public class RecordController {
     @ApiOperation("用户：添加病害类型")
     @PostMapping("add/disease/type")
     public Result<Long> addDiseaseType(@ApiParam("病害类型的名称") @RequestParam String diseaseName){
-        Long id = recordService.addDiseaseType(new DiseaseType(diseaseName, userSupport.getCurrentUserId(), 0));
+        Long id = recordService.addDiseaseType(new DiseaseType(diseaseName, diseaseName, userSupport.getCurrentUserId(), 0));
         return Result.success(id);
     }
 
     @ApiOperation("用户：添加虫害类型")
     @PostMapping("add/pest/type")
     public Result<Long> addPestType(@ApiParam("虫害类型的名称") @RequestParam String pestName){
-        Long id = recordService.addPestType(new PestType(pestName, userSupport.getCurrentUserId(), 0));
+        Long id = recordService.addPestType(new PestType(pestName, pestName, userSupport.getCurrentUserId(), 0));
         return Result.success(id);
     } 
     
     @ApiOperation("用户：添加作物类型")
     @PostMapping("add/crop/type")
     public Result<Long> addCropType(@ApiParam("作物类型的名称") @RequestParam String cropTypeName){
-        Long id = recordService.addCropType(new CropType(cropTypeName, userSupport.getCurrentUserId(), 0));
+        Long id = recordService.addCropType(new CropType(cropTypeName, cropTypeName, userSupport.getCurrentUserId(), 0));
         return Result.success(id);
     }
     
@@ -270,7 +270,7 @@ public class RecordController {
     @PostMapping("add/crop/variety")
     public Result<Long> addCropVariety(@ApiParam("作物类型的id") @RequestParam Long cropTypeId,
                                        @ApiParam("作物品种的名称") @RequestParam String name){
-        Long id = recordService.addCropVariety(new CropVariety(cropTypeId, name, userSupport.getCurrentUserId(), 0));
+        Long id = recordService.addCropVariety(new CropVariety(cropTypeId, name, name, userSupport.getCurrentUserId(), 0));
         return Result.success(id);
     }
 

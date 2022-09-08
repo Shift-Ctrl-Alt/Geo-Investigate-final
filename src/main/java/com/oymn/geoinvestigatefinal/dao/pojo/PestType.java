@@ -15,6 +15,9 @@ public class PestType {
 
     @ApiModelProperty("虫害类型名")
     private String name;
+
+    @ApiModelProperty("英文名")
+    private String nameEn;
     
     @ApiModelProperty("创建用户")
     private Long createUser;
@@ -36,8 +39,9 @@ public class PestType {
         this.name = name;
     }
 
-    public PestType(String name, Long createUser, Integer isManager) {
+    public PestType(String name, String nameEn, Long createUser, Integer isManager) {
         this.name = name;
+        this.nameEn = nameEn;
         this.createUser = createUser;
         this.isManager = isManager;
     }
