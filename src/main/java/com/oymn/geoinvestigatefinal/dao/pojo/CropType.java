@@ -14,7 +14,7 @@ public class CropType {
     private Long id;
 
     @ApiModelProperty("名称")
-    private String name;
+    private String nameChs;
     
     @ApiModelProperty("英文名")
     private String nameEn;
@@ -36,11 +36,11 @@ public class CropType {
 
     public CropType(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.nameChs = name;
     }
 
     public CropType(String name, String nameEn, Long createUser, Integer isManager) {
-        this.name = name;
+        this.nameChs = name;
         this.nameEn = nameEn;
         this.createUser = createUser;
         this.isManager = isManager;

@@ -15,7 +15,7 @@ public class DiseaseType {
     private Long id;
     
     @ApiModelProperty("病害类型名")
-    private String name;
+    private String nameChs;
     
     @ApiModelProperty("英文名称")
     private String nameEn;
@@ -37,11 +37,11 @@ public class DiseaseType {
 
     public DiseaseType(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.nameChs = name;
     }
 
     public DiseaseType(String name, String nameEn, Long createUser, Integer isManager) {
-        this.name = name;
+        this.nameChs = name;
         this.nameEn = nameEn;
         this.createUser = createUser;
         this.isManager = isManager;

@@ -24,9 +24,9 @@ public class SeverityController {
     @ApiOperation("添加严重程度")
     @PostMapping("/add")
     @PreAuthorize("@ex.hasAuthority('system:severity:add')")
-    public Result<Long> addSeverity(@ApiParam("严重程度名称") @RequestParam String name,
+    public Result<Long> addSeverity(@ApiParam("严重程度名称") @RequestParam String nameChs,
                                     @ApiParam("英文名称") @RequestParam String nameEn){
-        Long id = severityService.addSeverity(new Severity(name, nameEn));
+        Long id = severityService.addSeverity(new Severity(nameChs, nameEn));
         return Result.success(id);
     }
     

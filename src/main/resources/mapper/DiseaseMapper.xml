@@ -4,21 +4,21 @@
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.DiseaseDao">
 
     <insert id="addDiseaseType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_disease_type(name, name_en, create_user, is_manager) values (#{name}, #{nameEn}, #{createUser}, #{isManager})
+        insert into t_disease_type(name_chs, name_en, create_user, is_manager) values (#{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <update id="updateDiseaseType">
-        update t_disease_type set name = #{name}, name_en = #{nameEn} where id = #{id}
+        update t_disease_type set name_chs = #{nameChs}, name_en = #{nameEn} where id = #{id}
     </update>
     <delete id="deleteDiseaseType">
         delete from t_disease_type where id = #{diseaseTypeId}
     </delete>
     <select id="getAllDiseaseType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_disease_type
     </select>
     <select id="getDiseaseTypeByName" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_disease_type
-        where name = #{name}
+        where name_chs = #{nameChs}
     </select>
 </mapper>

@@ -205,7 +205,7 @@ public class RecordServiceImpl implements RecordService {
             throw new ConditionException("作物类型不存在");
         }
 
-        CropVariety dbCropVariety = cropDao.getCropVariety(cropVariety.getTypeId(), cropVariety.getName());
+        CropVariety dbCropVariety = cropDao.getCropVariety(cropVariety.getTypeId(), cropVariety.getNameChs());
         if(dbCropVariety != null){
             throw new ConditionException("作物品种名称已存在");
         }

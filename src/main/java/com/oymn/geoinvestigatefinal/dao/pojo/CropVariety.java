@@ -16,7 +16,7 @@ public class CropVariety {
     private Long typeId;
 
     @ApiModelProperty("名称")
-    private String name;
+    private String nameChs;
     
     @ApiModelProperty("英文名称")
     private String nameEn;
@@ -38,7 +38,7 @@ public class CropVariety {
 
     public CropVariety(Long typeId, String name, String nameEn, Long createUser, Integer isManager) {
         this.typeId = typeId;
-        this.name = name;
+        this.nameChs = name;
         this.nameEn = nameEn;
         this.createUser = createUser;
         this.isManager = isManager;

@@ -19,7 +19,7 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public Long addCropType(CropType cropType) {
-        CropType dbCropType = cropDao.getCropTypeByName(cropType.getName());
+        CropType dbCropType = cropDao.getCropTypeByName(cropType.getNameChs());
         if(dbCropType != null){
             throw new ConditionException("该名称已存在");
         }
@@ -52,7 +52,7 @@ public class CropServiceImpl implements CropService {
             throw new ConditionException("作物类型不存在");
         }
         
-        CropVariety dbCropVariety = cropDao.getCropVariety(cropVariety.getTypeId(), cropVariety.getName());
+        CropVariety dbCropVariety = cropDao.getCropVariety(cropVariety.getTypeId(), cropVariety.getNameChs());
         if(dbCropVariety != null){
             throw new ConditionException("作物品种名称已存在");
         }

@@ -17,16 +17,16 @@
         insert into t_drought_img(record_id, url) values (#{recordId}, #{imgUrl})
     </insert>
     <insert id="addDiseaseType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_disease_type(name, name_en, create_user, is_manager) values (#{name}, #{nameEn}, #{createUser}, #{isManager})
+        insert into t_disease_type(name_chs, name_en, create_user, is_manager) values (#{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <insert id="addPestType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_pest_type(name, name_en, create_user, is_manager) values (#{name}, #{nameEn}, #{createUser}, #{isManager})
+        insert into t_pest_type(name_chs, name_en, create_user, is_manager) values (#{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <insert id="addCropType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_crop_type(name, name_en, create_user, is_manager) values (#{name}, #{nameEn}, #{createUser}, #{isManager})
+        insert into t_crop_type(name_chs, name_en, create_user, is_manager) values (#{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <insert id="addCropVariety" useGeneratedKeys="true" keyProperty="id">
-        insert into t_crop_variety(type_id, name, create_user, is_manager) VALUES (#{typeId}, #{name}, #{createUser}, #{isManager})
+        insert into t_crop_variety(type_id, name_chs, name_en, create_user, is_manager) VALUES (#{typeId}, #{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <update id="updateRecord">
         update t_record
@@ -140,27 +140,27 @@
         where record_id = #{recordId}
     </select>
     <select id="getAllDiseaseType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_disease_type
         where is_manager = 1 or create_user = #{userId}
     </select>
     <select id="getAllPestType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_pest_type
         where is_manager = 1 or create_user = #{userId}
     </select>
     <select id="getAllCropType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_crop_type
         where is_manager = 1 or create_user = #{userId}
     </select>
     <select id="getCropVariety" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
-        select id, type_id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, type_id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_crop_variety
         where type_id = #{cropTypeId} and (create_user = #{userId} or is_manager = 1)
     </select>
     <select id="getDiseaseTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseType">
-        select id, name, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_disease_type
         where id = #{diseaseTypeId}
     </select>
@@ -170,17 +170,17 @@
         where id = #{severityId}
     </select>
     <select id="getPestTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
-        select id, name, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_pest_type
         where id = #{pestTypeId}
     </select>
     <select id="getCropTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropType">
-        select id, name, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_crop_type
         where id = #{cropTypeId}
     </select>
     <select id="getCropVarietyById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.CropVariety">
-        select id, type_id, name, create_user, is_manager, create_time, update_time
+        select id, type_id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_crop_variety
         where id = #{cropVarietyId}
     </select>

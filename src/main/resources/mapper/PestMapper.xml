@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.PestDao">
     <insert id="addPestType" useGeneratedKeys="true" keyProperty="id">
-        insert into t_pest_type(name, name_en, create_user, is_manager) values(#{name}, #{nameEn}, #{createUser}, #{isManager})
+        insert into t_pest_type(name_chs, name_en, create_user, is_manager) values(#{nameChs}, #{nameEn}, #{createUser}, #{isManager})
     </insert>
     <update id="updatePestType">
         update t_pest_type 
-        set name = #{name}, name_en = #{nameEn}
+        set name_chs = #{nameChs}, name_en = #{nameEn}
         where id = #{id}
     </update>
     <delete id="deletePestType">
@@ -15,12 +15,12 @@
     </delete>
 
     <select id="getPestTypeByName" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_pest_type
-        where name = #{name}
+        where name_chs = #{nameChs}
     </select>
     <select id="getAllPestType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.PestType">
-        select id, name, name_en, create_user, is_manager, create_time, update_time
+        select id, name_chs, name_en, create_user, is_manager, create_time, update_time
         from t_pest_type
     </select>
 </mapper>

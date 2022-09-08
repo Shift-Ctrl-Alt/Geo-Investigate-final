@@ -17,7 +17,7 @@ public class PestServiceImpl implements PestService {
 
     @Override
     public Long addPestType(PestType pestType) {
-        PestType dbPestType = pestDao.getPestTypeByName(pestType.getName());
+        PestType dbPestType = pestDao.getPestTypeByName(pestType.getNameChs());
         if(dbPestType != null){
             throw new ConditionException("该虫害类型已存在");
         }

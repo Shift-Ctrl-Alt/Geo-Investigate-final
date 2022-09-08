@@ -16,7 +16,7 @@ public class DiseaseServiceImpl implements DiseaseService {
     
     @Override
     public Long addDiseaseType(DiseaseType diseaseType) {
-        DiseaseType dbDiseaseType = diseaseDao.getDiseaseTypeByName(diseaseType.getName());
+        DiseaseType dbDiseaseType = diseaseDao.getDiseaseTypeByName(diseaseType.getNameChs());
         if(dbDiseaseType != null){
             throw new ConditionException("该病害类型已存在");
         }

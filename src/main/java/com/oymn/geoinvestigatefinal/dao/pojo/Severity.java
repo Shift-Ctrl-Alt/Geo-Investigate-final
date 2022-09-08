@@ -14,7 +14,7 @@ public class Severity {
     private Long id;
 
     @ApiModelProperty("名称")
-    private String name;
+    private String nameChs;
 
     @ApiModelProperty("英文名称")
     private String nameEn;
@@ -30,11 +30,11 @@ public class Severity {
 
     public Severity(Long id, String name) {
         this.id = id;
-        this.name = name;
+        this.nameChs = name;
     }
 
     public Severity(String name, String nameEn) {
-        this.name = name;
+        this.nameChs = name;
         this.nameEn = nameEn;
     }
 }

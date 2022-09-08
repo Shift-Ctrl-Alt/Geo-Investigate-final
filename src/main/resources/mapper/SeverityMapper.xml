@@ -3,11 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.SeverityDao">
     <insert id="addSeverity" useGeneratedKeys="true" keyProperty="id">
-        insert into t_severity(name, name_en) values (#{name}, #{nameEn})
+        insert into t_severity(name_chs, name_en) values (#{nameChs}, #{nameEn})
     </insert>
     <update id="updateSeverity">
         update t_severity 
-        set name = #{name}, name_en = #{nameEn}
+        set name_chs = #{nameChs}, name_en = #{nameEn}
         where id = #{id}
     </update>
     <delete id="deleteSeverity">
@@ -15,12 +15,12 @@
     </delete>
 
     <select id="getSeverityByName" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
-        select id, name, name_en, create_time, update_time
+        select id, name_chs, name_en, create_time, update_time
         from t_severity
-        where name = #{name}
+        where name_chs = #{nameChs}
     </select>
     <select id="getAllSeverity" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
-        select id, name, name_en, create_time, update_time
+        select id, name_chs, name_en, create_time, update_time
         from t_severity
     </select>
 </mapper>

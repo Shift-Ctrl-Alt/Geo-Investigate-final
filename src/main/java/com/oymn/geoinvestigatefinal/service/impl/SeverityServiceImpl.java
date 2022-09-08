@@ -17,7 +17,7 @@ public class SeverityServiceImpl implements SeverityService {
 
     @Override
     public Long addSeverity(Severity severity) {
-        Severity dbSeverity = severityDao.getSeverityByName(severity.getName());
+        Severity dbSeverity = severityDao.getSeverityByName(severity.getNameChs());
         if(dbSeverity != null){
             throw new ConditionException("该名称已存在");
         }
