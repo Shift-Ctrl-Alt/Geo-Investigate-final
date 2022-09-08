@@ -37,43 +37,43 @@ public class RecordServiceImpl implements RecordService {
     public Long addRecord(Record record) {
         Long diseaseTypeId = record.getDiseaseType();
         DiseaseType diseaseType = recordDao.getDiseaseTypeById(diseaseTypeId);
-        if(diseaseType == null){
+        if(diseaseTypeId != null && diseaseType == null){
             throw new ConditionException("病害类型不存在");
         }
         
         Long diseaseSeverityId = record.getDiseaseSeverity();
         Severity diseaseSeverity = recordDao.getSeverityById(diseaseSeverityId);
-        if(diseaseSeverity == null){
+        if(diseaseSeverityId != null && diseaseSeverity == null){
             throw new ConditionException("请输入正确的病害严重程度");
         }
 
         Long pestTypeId = record.getPestType();
         PestType pestType = recordDao.getPestTypeById(pestTypeId);
-        if(pestType == null){
+        if(pestTypeId != null && pestType == null){
             throw new ConditionException("虫害类型不存在");
         }
 
         Long pestSeverityId = record.getPestSeverity();
         Severity pestSeverity = recordDao.getSeverityById(pestSeverityId);
-        if(pestSeverity == null){
+        if(pestSeverityId != null && pestSeverity == null){
             throw new ConditionException("请输入正确的虫害严重程度");
         }
 
         Long cropTypeId = record.getCropType();
         CropType cropType = recordDao.getCropTypeById(cropTypeId);
-        if(cropType == null){
+        if(cropTypeId != null && cropType == null){
             throw new ConditionException("作物类型不存在");
         }
 
-        Long CropVarietyId = record.getCropVariety();
-        CropVariety cropVariety = recordDao.getCropVarietyById(CropVarietyId);
-        if(cropVariety == null){
+        Long cropVarietyId = record.getCropVariety();
+        CropVariety cropVariety = recordDao.getCropVarietyById(cropVarietyId);
+        if(cropVarietyId != null && cropVariety == null){
             throw new ConditionException("作物品种不存在");
         }
 
         Long droughtSeverityId = record.getDroughtSeverity();
         Severity droughtSeverity = recordDao.getSeverityById(droughtSeverityId);
-        if(droughtSeverity == null){
+        if(droughtSeverityId != null && droughtSeverity == null){
             throw new ConditionException("请输入正确的干旱严重程度");
         }
 
