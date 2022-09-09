@@ -165,7 +165,7 @@
         where id = #{diseaseTypeId}
     </select>
     <select id="getSeverityById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Severity">
-        select id, name, create_time, update_time
+        select id, name_chs, name_en, create_time, update_time
         from t_severity
         where id = #{severityId}
     </select>
