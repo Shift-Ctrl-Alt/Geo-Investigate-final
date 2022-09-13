@@ -32,7 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 //是否发送Cookie
                 .allowCredentials(true)
                 //放行哪些原始域
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*")
                 .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
                 .allowedHeaders("*")
                 .exposedHeaders("*");
