@@ -30,7 +30,7 @@ public class TokenUtil {
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.MINUTE, 1);   //过期时间：3个月
+        calendar.add(Calendar.MONTH, 3);   //过期时间：3个月
         
         return JWT.create()
                 .withKeyId(String.valueOf(userId))   //存放用户id
