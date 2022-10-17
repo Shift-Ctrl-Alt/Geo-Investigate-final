@@ -26,7 +26,7 @@ public class FileServiceImpl implements FileService {
      * 上传文件
      *
      * @param uploadFile
-     * @param request
+     * @param 
      */
     @Override
     public String uploadFile(MultipartFile uploadFile, String dir, HttpServletRequest request) {

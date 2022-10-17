@@ -6,10 +6,8 @@ import com.oymn.geoinvestigatefinal.handler.UserSupport;
 import com.oymn.geoinvestigatefinal.service.FileService;
 import com.oymn.geoinvestigatefinal.service.RecordService;
 import com.oymn.geoinvestigatefinal.service.UserService;
-import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
-import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
-import com.oymn.geoinvestigatefinal.vo.RecordVo;
-import com.oymn.geoinvestigatefinal.vo.Result;
+import com.oymn.geoinvestigatefinal.util.Base64ToMultipartFile;
+import com.oymn.geoinvestigatefinal.vo.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,6 +49,14 @@ public class RecordController {
         String imgPath = fileService.uploadFile(uploadImg, dir, request);
         return Result.success(imgPath);
     }
+    
+    @ApiOperation("上传图片的方法：Base64")
+    @PostMapping("img_base64")
+    public Result uploadImg(@ApiParam("图片类") @RequestBody Img img, HttpServletRequest request){
+        String imgPath = fileService.uploadFile(Base64ToMultipartFile.base64Convert(img.getImgBase64()), img.getUrl(), request);
+        return Result.success(imgPath);
+    }
+    
     
     @ApiOperation("用户：添加一条记录")
     @PostMapping("add")
