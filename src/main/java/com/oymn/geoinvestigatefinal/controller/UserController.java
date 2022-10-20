@@ -116,6 +116,10 @@ public class UserController {
     }
     
     
-    
+    @ApiOperation("测试是否联网")
+    @GetMapping("/test")
+    public Result test(){
+        return Result.success("success");
+    }
     
 }
