@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.event.MouseAdapter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,17 +102,18 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public PageResult<Record> pageRecord(Long userId, Long pageNo, Long pageSize) {
-        if(userId == null || pageNo == null || pageSize == null){
+    public PageResult<Record> pageRecord(Long userId, Long pageNo, Long pageSize, Integer module) {
+        if(userId == null || pageNo == null || pageSize == null || module == null){
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
         
-        Map<String, Long> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("userId", userId);
         params.put("start", (pageNo - 1) * pageSize);
         params.put("pageSize", pageSize);
+        params.put("module", module);
         
-        int total = recordDao.getRecordCountByUserId(userId);
+        int total = recordDao.getRecordCountByUserId(userId, module);
         List<Record> recordList = recordDao.pageRecord(params);
         
         return new PageResult<>(total, recordList);
@@ -235,17 +237,38 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public List<LandTypeVo> getLandType() {
-        return landService.getLandType();
+    public List<LandTypeVo> getLandType(Integer module) {
+        return landService.getLandType(module);
     }
 
     @Override
-    public List<LandAttributeValueVo> getLandAttribute(Long landTypeId) {
-        return landService.getLandAttribute(landTypeId);
+    public List<LandAttributeValueVo> getLandAttribute(Long landTypeId, Integer module) {
+        return landService.getLandAttribute(landTypeId, module);
     }
 
     @Override
     public List<Severity> getAllSeverity() {
         return severityService.getAllSeverity();
+    }
+
+    @Override
+    public PageResult<Record> pageRecordWithTime(Long userId, Long pageNo, Long pageSize, Integer module, Long startTime, Long endTime) {
+        if(userId == null || pageNo == null || pageSize == null || module == null
+        || startTime == null || endTime == null){
+            throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
+        }
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("start", (pageNo - 1) * pageSize);
+        params.put("pageSize", pageSize);
+        params.put("module", module);
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+
+        int total = recordDao.getRecordCountByUserIdAndTime(userId, module, startTime, endTime);
+        List<Record> recordList = recordDao.pageRecordWithTime(params);
+
+        return new PageResult<>(total, recordList);
     }
 }

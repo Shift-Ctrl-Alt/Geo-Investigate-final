@@ -49,6 +49,9 @@ public class Record {
     @ApiModelProperty("土地信息")
     private String landMsg;
     
+    @ApiModelProperty("模块类别：土地利用1，专题2")
+    private int module;
+    
     @ApiModelProperty("创建时间")
     private Date createTime;
     
@@ -58,7 +61,7 @@ public class Record {
     public Record() {
     }
 
-    public Record(Long userId, Long surveyTime, Double lat, Double lng, Long cropType, Long cropVariety, Long diseaseType, Long diseaseSeverity, Long pestType, Long pestSeverity, Long droughtSeverity, String landMsg) {
+    public Record(Long userId, Long surveyTime, Double lat, Double lng, Long cropType, Long cropVariety, Long diseaseType, Long diseaseSeverity, Long pestType, Long pestSeverity, Long droughtSeverity, String landMsg, int module) {
         this.userId = userId;
         this.surveyTime = surveyTime;
         this.lat = lat;
@@ -71,5 +74,6 @@ public class Record {
         this.pestSeverity = pestSeverity;
         this.droughtSeverity = droughtSeverity;
         this.landMsg = landMsg;
+        this.module = module;
     }
 }

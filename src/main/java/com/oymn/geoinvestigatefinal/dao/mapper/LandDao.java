@@ -50,5 +50,16 @@ public interface LandDao {
     void deleteLandAttrValue(Long landAttrValueId);
 
     void deleteLandAttrValueByAttrId(Long landAttrId);
-    
+
+    //专题模块的
+    List<LandType> getFirstLandType2();
+
+    //专题模块的
+    List<LandType> getSubLandTypeById2(Long id);
+
+    //专题模块的
+    List<LandAttribute> getAttrByLandTypeId2(Long landTypeId);
+
+    //专题模块的
+    List<LandAttributeValue> getAttributeValue2(Long attributeId);
 }

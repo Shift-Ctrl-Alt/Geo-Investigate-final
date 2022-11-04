@@ -40,9 +40,10 @@ public interface RecordService {
      * @param userId
      * @param pageNo
      * @param pageSize
+     * @param module
      * @return
      */
-    PageResult<Record> pageRecord(Long userId, Long pageNo, Long pageSize);
+    PageResult<Record> pageRecord(Long userId, Long pageNo, Long pageSize, Integer module);
 
     /**
      * 添加灾害图片
@@ -176,11 +177,12 @@ public interface RecordService {
 
     List<CropVariety> getCropVariety(Long cropTypeId, Long currentUserId);
 
-    List<LandTypeVo> getLandType();
+    List<LandTypeVo> getLandType(Integer module);
 
-    List<LandAttributeValueVo> getLandAttribute(Long landTypeId);
+    List<LandAttributeValueVo> getLandAttribute(Long landTypeId, Integer module);
 
     List<Severity> getAllSeverity();
     
+    PageResult<Record> pageRecordWithTime(Long userId, Long pageNo, Long pageSize, Integer module, Long startTime, Long endTime);
     
 }

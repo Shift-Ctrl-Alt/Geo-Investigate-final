@@ -4,8 +4,8 @@
 <mapper namespace="com.oymn.geoinvestigatefinal.dao.mapper.RecordDao">
 
     <insert id="addRecord" useGeneratedKeys="true" keyProperty="id">
-        insert into t_record(user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg) 
-        values (#{userId}, #{surveyTime}, #{lat}, #{lng}, #{cropType}, #{cropVariety},#{diseaseType}, #{diseaseSeverity}, #{pestType}, #{pestSeverity}, #{droughtSeverity}, #{landMsg})
+        insert into t_record(user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, module) 
+        values (#{userId}, #{surveyTime}, #{lat}, #{lng}, #{cropType}, #{cropVariety},#{diseaseType}, #{diseaseSeverity}, #{pestType}, #{pestSeverity}, #{droughtSeverity}, #{landMsg}, #{module})
     </insert>
     <insert id="addDiseaseImg" useGeneratedKeys="true" keyProperty="id">
         insert into t_disease_img(record_id, url) VALUES (#{recordId}, #{imgUrl}) 
@@ -93,22 +93,38 @@
         where record_id = #{recordId};
     </delete>
     <select id="getRecordById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
-        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time, module
         from t_record
         where id = #{id}
     </select>
     <select id="getRecordCountByUserId" resultType="java.lang.Integer">
         select count(1)
         from t_record
-        where user_id = #{userId}
-    </select>   
-    <select id="pageRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
-        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time
+        where user_id = #{userId} and module = #{module}
+    </select>
+
+    <select id="getRecordCountByUserIdAndTime" resultType="java.lang.Integer">
+        select count(1)
         from t_record
-        where user_id = #{userId}
+        where user_id = #{userId} and module = #{module} 
+          and (survey_time between #{startTime} and #{endTime})
+    </select>
+    <select id="pageRecord" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time, module
+        from t_record
+        where user_id = #{userId} and module = #{module}
         order by create_time desc
         limit #{start}, #{pageSize}
     </select>
+    <select id="pageRecordWithTime" resultType="com.oymn.geoinvestigatefinal.dao.pojo.Record">
+        select id, user_id, survey_time, lat, lng, crop_type, crop_variety, disease_type, disease_severity, pest_type, pest_severity, drought_severity, land_msg, create_time, update_time, module
+        from t_record
+        where user_id = #{userId} and module = #{module} 
+          and (survey_time between #{startTime} and #{endTime})
+        order by survey_time desc
+        limit #{start}, #{pageSize}
+    </select>
+    
     <select id="getDiseaseImgById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.DiseaseImgRecord">
         select id, record_id, url imgUrl, create_time, update_time
         from t_disease_img

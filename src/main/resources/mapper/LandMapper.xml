@@ -95,25 +95,25 @@
 
     <select id="getSubLandTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandType">
         SELECT id, name_chs nameChs, name_en nameEn, parent_id parentId, create_time createTime, update_time updateTime
-        FROM t_land_type
+        FROM t_land_type_2
         WHERE parent_id = #{id}
     </select>
     
     <select id="getFirstLandType" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandType">
         SELECT id, name_chs nameChs, name_en nameEn, parent_id parentId, create_time createTime, update_time updateTime
-        FROM t_land_type
+        FROM t_land_type_2
         WHERE parent_id IS NULL
     </select>
     
     <select id="getAttrByLandTypeId" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandAttribute">
         select id, land_type_id landTypeId, name_chs nameChs, name_en nameEn, unit, required, create_time createTime, update_time updateTime
-        from t_land_attribute
+        from t_land_attribute_2
         where land_type_id = #{landTypeId}
     </select>
     
     <select id="getAttributeValue" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandAttributeValue">
         select id, land_attr_id landAttributeId, value_chs valueChs, value_en valueEn, create_time createTime, update_time updateTime
-        from t_land_attribute_value
+        from t_land_attribute_value_2
         where land_attr_id = #{attributeId}
     </select>
     <select id="getLandTypeById" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandType">
@@ -140,6 +140,26 @@
         select id, land_type_id landTypeId , name_chs nameChs, name_en nameEn, unit, required, create_time createtime, update_time updateTime
         from t_land_attribute
         where id = #{landAttrId}
+    </select>
+    <select id="getFirstLandType2" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandType">
+        SELECT id, name_chs nameChs, name_en nameEn, parent_id parentId, create_time createTime, update_time updateTime
+        FROM t_land_type
+        WHERE parent_id IS NULL
+    </select>
+    <select id="getSubLandTypeById2" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandType">
+        SELECT id, name_chs nameChs, name_en nameEn, parent_id parentId, create_time createTime, update_time updateTime
+        FROM t_land_type
+        WHERE parent_id = #{id}
+    </select>
+    <select id="getAttrByLandTypeId2" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandAttribute">
+        select id, land_type_id landTypeId, name_chs nameChs, name_en nameEn, unit, required, create_time createTime, update_time updateTime
+        from t_land_attribute
+        where land_type_id = #{landTypeId}
+    </select>
+    <select id="getAttributeValue2" resultType="com.oymn.geoinvestigatefinal.dao.pojo.LandAttributeValue">
+        select id, land_attr_id landAttributeId, value_chs valueChs, value_en valueEn, create_time createTime, update_time updateTime
+        from t_land_attribute_value
+        where land_attr_id = #{attributeId}
     </select>
 
 

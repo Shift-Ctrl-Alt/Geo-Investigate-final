@@ -97,9 +97,10 @@ public class RecordController {
     @ApiOperation("用户：分页查询记录")
     @GetMapping("page-get")
     public Result<PageResult<Record>> pageRecord(@ApiParam("页号") @RequestParam Long pageNo,
-                                               @ApiParam("页的大小") @RequestParam Long pageSize){
+                                               @ApiParam("页的大小") @RequestParam Long pageSize,
+                                                 @ApiParam("模块：土地1，专题2") @RequestParam Integer module){
         Long userId = userSupport.getCurrentUserId();
-        PageResult<Record> recordList = recordService.pageRecord(userId, pageNo, pageSize);
+        PageResult<Record> recordList = recordService.pageRecord(userId, pageNo, pageSize, module);
         return Result.success(recordList);
     }
     
@@ -310,8 +311,8 @@ public class RecordController {
 
     @ApiOperation("用户：获取土地类型")
     @GetMapping("/get/land/type")
-    public Result<List<LandTypeVo>> getLandType(){
-        List<LandTypeVo> landTypeList = recordService.getLandType();
+    public Result<List<LandTypeVo>> getLandType(@ApiParam("模块：土地1，专题2") @RequestParam Integer module){
+        List<LandTypeVo> landTypeList = recordService.getLandType(module);
         return Result.success(landTypeList);
     }
 
@@ -322,11 +323,10 @@ public class RecordController {
      */
     @ApiOperation("用户：获取土地属性及属性值")
     @GetMapping("/get/land/attribute")
-    @ApiImplicitParams(
-            @ApiImplicitParam(name = "landTypeId", value = "二级土地类型id",dataType = "Long", required = true)
-    )
-    public Result<List<LandAttributeValueVo>> getLandAttribute(Long landTypeId){
-        List<LandAttributeValueVo> landAttributeList = recordService.getLandAttribute(landTypeId);
+    public Result<List<LandAttributeValueVo>> getLandAttribute(@ApiParam("土地类型id") @RequestParam Long landTypeId,
+                                                               @ApiParam("模块：土地1，专题2") @RequestParam Integer module){
+        System.out.println("..");
+        List<LandAttributeValueVo> landAttributeList = recordService.getLandAttribute(landTypeId, module);
         return Result.success(landAttributeList);
     }
 
@@ -335,6 +335,18 @@ public class RecordController {
     public Result<List<Severity>> getAllSeverity(){
         List<Severity> severityList = recordService.getAllSeverity();
         return Result.success(severityList);
+    }
+    
+    @ApiOperation("用户：通过时间查询历史记录")
+    @GetMapping("/get/record")
+    public Result<PageResult<Record>> pageRecord(@ApiParam("页号") @RequestParam Long pageNo,
+                                                 @ApiParam("页的大小") @RequestParam Long pageSize,
+                                                 @ApiParam("模块：土地1，专题2") @RequestParam Integer module,
+                                                 @ApiParam("开始时间") @RequestParam Long startTime,
+                                                 @ApiParam("结束时间") @RequestParam Long endTime){
+        Long userId = userSupport.getCurrentUserId();
+        PageResult<Record> recordList = recordService.pageRecordWithTime(userId, pageNo, pageSize, module, startTime, endTime);
+        return Result.success(recordList);
     }
     
 }

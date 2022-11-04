@@ -25,15 +25,16 @@ public class LandServiceImpl implements LandService {
 
     @Autowired
     private LandDao landDao;
-    
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-    
+
     //保存土地类型
-    private static final String LAND_TYPE_LIST = "LAND_TYPE_LIST";
-    
+    private static final String LAND_TYPE_LIST_ = "LAND_TYPE_LIST_";
+
     //保存土地属性和属性值
-    private static final String LAND_ATTRIBUTE_AND_VALUE = "LAND_ATTRIBUTE_AND_VALUE";
+    private static final String LAND_ATTRIBUTE_AND_VALUE_ = "LAND_ATTRIBUTE_AND_VALUE_";
+
 
     /**
      * 获取土地类型
@@ -41,75 +42,89 @@ public class LandServiceImpl implements LandService {
      * @return
      */
     @Override
-    public List<LandTypeVo> getLandType() {
+    public List<LandTypeVo> getLandType(Integer module) {
 
         //从redis中获取
-        String landTypesJson = redisTemplate.opsForValue().get(LAND_TYPE_LIST);
-        if(landTypesJson != null && landTypesJson != ""){
+        String landTypesJson = redisTemplate.opsForValue().get(LAND_TYPE_LIST_ + module);
+        if (landTypesJson != null && landTypesJson != "") {
             return JSONObject.parseArray(landTypesJson, LandTypeVo.class);
         }
-        
-        //获取一级分类
-        List<LandType> firstLandTypeList = landDao.getFirstLandType();
 
-        //获取二级分类
+        //获取一级分类
         List<LandTypeVo> landTypeList = new ArrayList<>();
-        for (LandType landType : firstLandTypeList) {
-            LandTypeVo landTypeVo = new LandTypeVo(landType.getId(), landType.getNameChs(), landType.getNameEn());
-            List<LandType> subLandType = landDao.getSubLandTypeById(landType.getId());
-            landTypeVo.setSubLandType(subLandType);
-            landTypeList.add(landTypeVo);
+        if (module == 1) {
+            //土地利用模块的
+            List<LandType> firstLandTypeList = landDao.getFirstLandType();
+            //获取二级分类
+            for (LandType landType : firstLandTypeList) {
+                LandTypeVo landTypeVo = new LandTypeVo(landType.getId(), landType.getNameChs(), landType.getNameEn());
+                List<LandType> subLandType = landDao.getSubLandTypeById(landType.getId());
+                landTypeVo.setSubLandType(subLandType);
+                landTypeList.add(landTypeVo);
+            }
+        } else if (module == 2) {
+            //专题模块的
+            List<LandType> firstLandTypeList = landDao.getFirstLandType2();
+            //获取二级分类
+            for (LandType landType : firstLandTypeList) {
+                LandTypeVo landTypeVo = new LandTypeVo(landType.getId(), landType.getNameChs(), landType.getNameEn());
+                List<LandType> subLandType = landDao.getSubLandTypeById2(landType.getId());
+                landTypeVo.setSubLandType(subLandType);
+                landTypeList.add(landTypeVo);
+            }
         }
-        
+
         //存入redis中
-        redisTemplate.opsForValue().set(LAND_TYPE_LIST, JSONObject.toJSONString(landTypeList));
+        redisTemplate.opsForValue().set(LAND_TYPE_LIST_ + module, JSONObject.toJSONString(landTypeList));
 
         return landTypeList;
     }
 
     /**
      * 获取土地的属性和属性值
+     *
      * @param landTypeId
      * @return
      */
     @Override
-    public List<LandAttributeValueVo> getLandAttribute(Long landTypeId) {
+    public List<LandAttributeValueVo> getLandAttribute(Long landTypeId, Integer module) {
 
         if (landTypeId == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         //从redis中获取
-        String landAttrValuesJson = (String) redisTemplate.opsForHash().get(LAND_ATTRIBUTE_AND_VALUE, landTypeId.toString());
-        if(landAttrValuesJson != null && landAttrValuesJson != ""){
+        String landAttrValuesJson = (String) redisTemplate.opsForHash().get(LAND_ATTRIBUTE_AND_VALUE_ + module, landTypeId.toString());
+        if (landAttrValuesJson != null && landAttrValuesJson != "") {
             return JSONObject.parseArray(landAttrValuesJson, LandAttributeValueVo.class);
         }
-        
+
         //获取该土地类型所具有的属性
-        List<LandAttribute> landAttributeList = landDao.getAttrByLandTypeId(landTypeId);
-        //去重
-        //List<LandAttribute> landAttributeSet = landAttributeList.stream()
-        //        .collect(
-        //                collectingAndThen(
-        //                        toCollection(
-        //                                () -> new TreeSet<>(comparing(LandAttribute::getId))
-        //                        ),
-        //                        ArrayList::new
-        //                )
-        //        );
-
-
         List<LandAttributeValueVo> landAttrValueVoList = new ArrayList<>();
-        for (LandAttribute landAttribute : landAttributeList) {
-            LandAttributeValueVo landAttrValueVo = new LandAttributeValueVo(landTypeId, landAttribute.getId(), landAttribute.getNameChs(), landAttribute.getNameEn(), landAttribute.getUnit(), landAttribute.getRequired());
-            List<LandAttributeValue> attributeValueList = landDao.getAttributeValue(landAttribute.getId());
-            landAttrValueVo.setAttributeValues(attributeValueList);
-            landAttrValueVoList.add(landAttrValueVo);
+        if (module == 1) {
+            //土地利用模块
+            List<LandAttribute> landAttributeList = landDao.getAttrByLandTypeId(landTypeId);
+            for (LandAttribute landAttribute : landAttributeList) {
+                LandAttributeValueVo landAttrValueVo = new LandAttributeValueVo(landTypeId, landAttribute.getId(), landAttribute.getNameChs(), landAttribute.getNameEn(), landAttribute.getUnit(), landAttribute.getRequired());
+                List<LandAttributeValue> attributeValueList = landDao.getAttributeValue(landAttribute.getId());
+                landAttrValueVo.setAttributeValues(attributeValueList);
+                landAttrValueVoList.add(landAttrValueVo);
+            }
         }
-
-        //存入redis中
-        redisTemplate.opsForHash().put(LAND_ATTRIBUTE_AND_VALUE, landTypeId.toString(), JSONObject.toJSONString(landAttrValueVoList));
+        else if(module == 2){
+            //专题模块
+            List<LandAttribute> landAttributeList = landDao.getAttrByLandTypeId2(landTypeId);
+            for (LandAttribute landAttribute : landAttributeList) {
+                LandAttributeValueVo landAttrValueVo = new LandAttributeValueVo(landTypeId, landAttribute.getId(), landAttribute.getNameChs(), landAttribute.getNameEn(), landAttribute.getUnit(), landAttribute.getRequired());
+                List<LandAttributeValue> attributeValueList = landDao.getAttributeValue2(landAttribute.getId());
+                landAttrValueVo.setAttributeValues(attributeValueList);
+                landAttrValueVoList.add(landAttrValueVo);
+            }
+        }
         
+        //存入redis中
+        redisTemplate.opsForHash().put(LAND_ATTRIBUTE_AND_VALUE_ + module, landTypeId.toString(), JSONObject.toJSONString(landAttrValueVoList));
+
         return landAttrValueVoList;
     }
 
@@ -131,10 +146,11 @@ public class LandServiceImpl implements LandService {
         landType.setCreateTime(new Date());
         landType.setUpdateTime(new Date());
         landDao.addLandType(landType);
-        
-        //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_TYPE_LIST);
-        
+
+        //将旧的记录从redis中删除  
+        //这里默认更新专题模块的，土地利用模块没更新，下面都是这样
+        redisTemplate.delete(LAND_TYPE_LIST_ + 2);
+
         return landType.getId();
     }
 
@@ -148,14 +164,14 @@ public class LandServiceImpl implements LandService {
         if (dbLandAttr != null) {
             throw new ConditionException("该土地属性已存在");
         }
-        
+
         landAttribute.setCreateTime(new Date());
         landAttribute.setUpdateTime(new Date());
         landDao.addLandAttr(landAttribute);
-        
+
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
-        
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
+
         return landAttribute.getId();
     }
 
@@ -171,15 +187,15 @@ public class LandServiceImpl implements LandService {
 
         //判断是否存在该属性
         LandAttribute landAttribute = landDao.getAttrByAttrId(landAttrId);
-        if(landAttribute == null){
+        if (landAttribute == null) {
             throw new ConditionException("该土地属性不存在");
         }
 
         List<LandAttributeValue> attributeValues = attrValues.getAttributeValues();
         landDao.addLandAttrValues(attributeValues);
-        
+
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
     }
 
     @Override
@@ -188,11 +204,11 @@ public class LandServiceImpl implements LandService {
         if (landType == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         landType.setUpdateTime(new Date());
         landDao.updateLandType(landType);
-        
-        redisTemplate.delete(LAND_TYPE_LIST);
+
+        redisTemplate.delete(LAND_TYPE_LIST_ + 2);
     }
 
     @Override
@@ -202,12 +218,12 @@ public class LandServiceImpl implements LandService {
         if (landTypeId == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         landDao.deleteLandType(landTypeId);
         //子类型也一并删除
         landDao.deleteLandTypeByParentId(landTypeId);
 
-        redisTemplate.delete(LAND_TYPE_LIST);
+        redisTemplate.delete(LAND_TYPE_LIST_ + 2);
     }
 
     @Override
@@ -216,12 +232,12 @@ public class LandServiceImpl implements LandService {
         if (landAttribute == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         landAttribute.setUpdateTime(new Date());
         landDao.updateLandAttr(landAttribute);
 
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
     }
 
     @Override
@@ -230,12 +246,12 @@ public class LandServiceImpl implements LandService {
         if (landAttributeValue == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         landAttributeValue.setUpdateTime(new Date());
         landDao.updateLandAttrValue(landAttributeValue);
 
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
     }
 
     @Override
@@ -245,14 +261,14 @@ public class LandServiceImpl implements LandService {
         if (landAttrId == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         //先删除土地属性
         landDao.deleteLandAttribute(landAttrId);
         //再删除土地属性值
         landDao.deleteLandAttrValueByAttrId(landAttrId);
 
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
     }
 
     @Override
@@ -261,11 +277,11 @@ public class LandServiceImpl implements LandService {
         if (landAttrValueId == null) {
             throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
         }
-        
+
         landDao.deleteLandAttrValue(landAttrValueId);
 
         //将旧的记录从redis中删除
-        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE);
+        redisTemplate.delete(LAND_ATTRIBUTE_AND_VALUE_ + 2);
     }
 
 

@@ -16,14 +16,14 @@ public interface LandService {
      * 获取土地类型
      * @return
      */
-    List<LandTypeVo> getLandType();
+    List<LandTypeVo> getLandType(Integer module);
 
     /**
-     * 获取土地属性
+     * 获取土地属性(module：土地利用模块1，专题模块2)
      * @param landTypeId
      * @return
      */
-    List<LandAttributeValueVo> getLandAttribute(Long landTypeId);
+    List<LandAttributeValueVo> getLandAttribute(Long landTypeId, Integer module);
 
     /**
      * 添加土地类型

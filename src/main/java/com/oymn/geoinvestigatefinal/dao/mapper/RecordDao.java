@@ -20,9 +20,16 @@ public interface RecordDao {
 
     Record getRecordById(Long id);
 
-    int getRecordCountByUserId(Long userId);
+    int getRecordCountByUserId(@Param("userId") Long userId, @Param("module") Integer module);
 
-    List<Record> pageRecord(Map<String, Long> params);
+    int getRecordCountByUserIdAndTime(@Param("userId") Long userId, @Param("module") Integer module,
+                               @Param("startTime") Long startTime, @Param("endTime") Long endTime);
+
+
+    List<Record> pageRecord(Map<String, Object> params);
+
+    List<Record> pageRecordWithTime(Map<String, Object> params);
+
 
     void addDiseaseImg(DiseaseImgRecord diseaseImgRecord);
 
@@ -79,5 +86,6 @@ public interface RecordDao {
     CropType getCropTypeById(Long cropTypeId);
 
     CropVariety getCropVarietyById(Long cropVarietyId);
+
     
 }
