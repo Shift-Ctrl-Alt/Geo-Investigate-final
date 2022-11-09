@@ -3,6 +3,7 @@ package com.oymn.geoinvestigatefinal.service;
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
 import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
 import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
+import com.oymn.geoinvestigatefinal.vo.RecordResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -184,5 +185,7 @@ public interface RecordService {
     List<Severity> getAllSeverity();
     
     PageResult<Record> pageRecordWithTime(Long userId, Long pageNo, Long pageSize, Integer module, Long startTime, Long endTime);
-    
+
+    List<RecordResult> pageRecordWithTime(Long userId, Integer module, Long startTime, Long endTime);
+
 }

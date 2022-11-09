@@ -10,6 +10,7 @@ import com.oymn.geoinvestigatefinal.service.RecordService;
 import com.oymn.geoinvestigatefinal.service.SeverityService;
 import com.oymn.geoinvestigatefinal.vo.LandAttributeValueVo;
 import com.oymn.geoinvestigatefinal.vo.LandTypeVo;
+import com.oymn.geoinvestigatefinal.vo.RecordResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -270,5 +271,22 @@ public class RecordServiceImpl implements RecordService {
         List<Record> recordList = recordDao.pageRecordWithTime(params);
 
         return new PageResult<>(total, recordList);
+    }
+
+    @Override
+    public List<RecordResult> pageRecordWithTime(Long userId, Integer module, Long startTime, Long endTime) {
+        if(userId == null || module == null || startTime == null || endTime == null){
+            throw new ConditionException(StatusCode.PARAMS_ERROR.getCode(), StatusCode.PARAMS_ERROR.getMsg());
+        }
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("module", module);
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+
+       List<RecordResult> recordResultList = recordDao.pageRecordWithTimeNoPage(params);
+
+        return recordResultList;
     }
 }

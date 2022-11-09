@@ -200,4 +200,11 @@
         from t_crop_variety
         where id = #{cropVarietyId}
     </select>
+    <select id="pageRecordWithTimeNoPage" resultType="com.oymn.geoinvestigatefinal.vo.RecordResult">
+        select id, survey_time, lat, lng
+        from t_record
+        where user_id = #{userId} and module = #{module}
+        and (survey_time between #{startTime} and #{endTime})
+        order by survey_time desc
+    </select>
 </mapper>

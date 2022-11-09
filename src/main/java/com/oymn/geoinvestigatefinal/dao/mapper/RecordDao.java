@@ -1,6 +1,7 @@
 package com.oymn.geoinvestigatefinal.dao.mapper;
 
 import com.oymn.geoinvestigatefinal.dao.pojo.*;
+import com.oymn.geoinvestigatefinal.vo.RecordResult;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
@@ -86,6 +87,7 @@ public interface RecordDao {
     CropType getCropTypeById(Long cropTypeId);
 
     CropVariety getCropVarietyById(Long cropVarietyId);
-
+    
+    List<RecordResult> pageRecordWithTimeNoPage(Map<String, Object> params);
     
 }

@@ -348,5 +348,16 @@ public class RecordController {
         PageResult<Record> recordList = recordService.pageRecordWithTime(userId, pageNo, pageSize, module, startTime, endTime);
         return Result.success(recordList);
     }
+
+    @ApiOperation("用户：通过时间查询历史记录(不分页)")
+    @GetMapping("/get/record/time")
+    public Result<List<RecordResult>> pageRecord(
+                                                 @ApiParam("模块：土地1，专题2") @RequestParam Integer module,
+                                                 @ApiParam("开始时间") @RequestParam Long startTime,
+                                                 @ApiParam("结束时间") @RequestParam Long endTime){
+        Long userId = userSupport.getCurrentUserId();
+        List<RecordResult> recordList = recordService.pageRecordWithTime(userId, module, startTime, endTime);
+        return Result.success(recordList);
+    }
     
 }
